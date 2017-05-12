@@ -1,0 +1,81 @@
+﻿@model IEnumerable<WebIluminaMVC.Model.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.active)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.createDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.createUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updateUser)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.createDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.createUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.updateUser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.userID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.userID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.userID })
+        </td>
+    </tr>
+}
+
+</table>
