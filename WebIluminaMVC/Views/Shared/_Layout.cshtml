@@ -42,8 +42,8 @@
         @{ Html.RenderPartial("_Ribbon"); }
         @RenderBody()
     </div>
-        Html.RenderPartial("_Footer");
-        Html.RenderPartial("_Tiles", Settings.EnableTiles);
+        @{Html.RenderPartial("_Footer");}
+        @*Html.RenderPartial("_Tiles", Settings.EnableTiles);*@
     @{ Html.RenderPartial("_Scripts", RenderSection("pagespecific", false)); }
 </body>
 
