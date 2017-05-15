@@ -1,81 +1,84 @@
 ﻿@model IEnumerable<WebIluminaMVC.Model.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Usuarios";
 }
 
-<h2>Index</h2>
+<div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+    <header>
+        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+        <h2>Usuarios</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.active)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.createDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.createUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.updateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.updateUser)
-        </th>
-        <th></th>
-    </tr>
+    </header>
+    <div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.active)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.createDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.createUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.updateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.updateUser)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.userID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.userID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.userID })
-        </td>
-    </tr>
-}
+        <div class="jarviswidget-editbox">
 
-</table>
+        </div>
+        <div class="widget-body no-padding">
+
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                    @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn bg-color-blueDark txt-color-white" })
+                </div>
+                <div class="col-sm-8">
+                </div>                
+            </div>
+            <br />
+
+
+            <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+                        <th>Correo</th>
+                        <th>Número Telf.</th>
+                        <th>Usuario</th>
+                        <th>Activo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.userID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lastname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dni)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phonenumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.active)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Modificar", "Edit", new { id = item.userID }) |
+                                @Html.ActionLink("Detalle", "Details", new { id = item.userID }) |
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.userID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

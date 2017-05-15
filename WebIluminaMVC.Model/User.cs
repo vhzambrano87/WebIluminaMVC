@@ -20,6 +20,18 @@ namespace WebIluminaMVC.Model
         [MaxLength(length: 100)]
         [Required(ErrorMessage = "Por favor ingresar {0}")]
         public string lastname { get; set; }
+        [Display(Name = "Email")]
+        [MaxLength(length: 100)]
+        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "Por favor ingresar {0}")]
+        public string email { get; set; }
+        [Display(Name = "DNI")]
+        [MaxLength(length: 10)]
+        [Required(ErrorMessage = "Por favor ingresar {0}")]
+        public string dni { get; set; }
+        [Display(Name = "Número Telf.")]
+        [MaxLength(length: 12)]
+        public string phonenumber { get; set; }
         [Display(Name = "Usuario")]
         [MaxLength(length: 100)]
         [Required(ErrorMessage = "Por favor ingresar {0}")]
