@@ -21,21 +21,6 @@ namespace WebIluminaMVC.Controllers
             return View(db.User.ToList());
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.User.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
         // GET: Users/Create
         public ActionResult Create()
         {
@@ -47,7 +32,7 @@ namespace WebIluminaMVC.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "userID,name,lastname,username,password,active,createDate,createUser,updateDate,updateUser")] User user)
+        public ActionResult Create([Bind(Include = "userID,name,lastname,username,password,active,email,dni,phonenumber,createDate,createUser,updateDate,updateUser")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +65,7 @@ namespace WebIluminaMVC.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "userID,name,lastname,username,password,active,createDate,createUser,updateDate,updateUser")] User user)
+        public ActionResult Edit([Bind(Include = "userID,name,lastname,username,password,active,email,dni,phonenumber,createDate,createUser,updateDate,updateUser")] User user)
         {
             if (ModelState.IsValid)
             {
