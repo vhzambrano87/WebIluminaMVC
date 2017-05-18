@@ -180,6 +180,7 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1084,11 +1085,18 @@
     <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
     <Content Include="Views\Shared\_Tiles.cshtml" />
     <Content Include="Views\Shared\_TopRight.cshtml" />
+    <Content Include="Views\UserRoles\Create.cshtml" />
+    <Content Include="Views\UserRoles\Delete.cshtml" />
+    <Content Include="Views\UserRoles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj">
       <Project>{3da6fe9f-aa15-4cb0-84c6-c1ec5bed121e}</Project>
       <Name>WebIluminaMVC.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebIluminaMVC.ModelView\WebIluminaMVC.ModelView.csproj">
+      <Project>{1fe0937f-f6d3-4b12-bfda-654f5fd7ca6c}</Project>
+      <Name>WebIluminaMVC.ModelView</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebIluminaMVC.Model\WebIluminaMVC.Model.csproj">
       <Project>{86c44b02-6c75-4c2c-bca6-a7f55f7a4234}</Project>

@@ -18,7 +18,7 @@ namespace WebIluminaMVC.Controllers
         // GET: Roles
         public ActionResult Index()
         {
-            return View(db.Role.ToList());
+            return View(db.Role.ToList().OrderBy(x => x.name));
         }
 
         // GET: Roles/Details/5
@@ -124,5 +124,7 @@ namespace WebIluminaMVC.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

@@ -31,6 +31,9 @@ namespace WebIluminaMVC.Model
         [NotMapped]
         [Display(Name = "U. Modificador")]
         public string updateUserStr { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public bool selected { get; set; }
+
         public virtual ICollection<UserRole> userRoles { get; set; }
     }
 }

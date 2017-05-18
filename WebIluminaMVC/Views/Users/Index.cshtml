@@ -71,7 +71,8 @@
                                 </td>
                                 <td>
                                     @Html.ActionLink("Modificar", "Edit", new { id = item.userID }) |
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.userID })
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.userID })|
+                                    @Html.ActionLink("Roles", "Index", "UserRoles",new { id = item.userID },null)
                                 </td>
                             </tr>
                         }

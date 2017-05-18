@@ -18,7 +18,7 @@ namespace WebIluminaMVC.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.User.ToList());
+            return View(db.User.ToList().OrderBy(x=>x.name));
         }
 
         // GET: Users/Create

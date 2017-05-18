@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebIluminaMVC.Model", "WebI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebIluminaMVC.DataAccess", "WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj", "{3DA6FE9F-AA15-4CB0-84C6-C1EC5BED121E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebIluminaMVC.ModelView", "WebIluminaMVC.ModelView\WebIluminaMVC.ModelView.csproj", "{1FE0937F-F6D3-4B12-BFDA-654F5FD7CA6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3DA6FE9F-AA15-4CB0-84C6-C1EC5BED121E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DA6FE9F-AA15-4CB0-84C6-C1EC5BED121E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DA6FE9F-AA15-4CB0-84C6-C1EC5BED121E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE0937F-F6D3-4B12-BFDA-654F5FD7CA6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE0937F-F6D3-4B12-BFDA-654F5FD7CA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE0937F-F6D3-4B12-BFDA-654F5FD7CA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE0937F-F6D3-4B12-BFDA-654F5FD7CA6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
