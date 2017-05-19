@@ -24,8 +24,8 @@ namespace WebIluminaMVC.Controllers
                 id = 0;
 
             UserRoleView objUserRoleView = new UserRoleView();
-            objUserRoleView.userRoleList = db.UserRole.Include(u => u.role).Include(u => u.user).Where(u=>u.user.userID==id).ToList();
-            objUserRoleView.roles = db.Database.SqlQuery<Role>("select r.roleid, r.name, CAST(ISNULL((select 1 from userRoles ur where ur.userID = @userID and ur.roleID = r.roleID),0) AS BIT) selected, r.active, r.createdate, r.createuser, r.updatedate, r.updateuser from roles r where r.active = 1 ", new SqlParameter ("@userID",id)).ToList();
+            objUserRoleView.userRoleList = db.UserRole.Include(u => u.role).Include(u => u.user).Where(u => u.user.userID == id).ToList();
+            objUserRoleView.roles = db.Database.SqlQuery<Role>("select r.roleid, r.name, CAST(ISNULL((select 1 from userRoles ur where ur.userID = @userID and ur.roleID = r.roleID),0) AS BIT) selected, r.active, r.createdate, r.createuser, r.updatedate, r.updateuser from roles r where r.active = 1 ", new SqlParameter("@userID", id)).ToList();
             objUserRoleView.user = db.User.Find(id);
 
             return View(objUserRoleView);
@@ -36,34 +36,48 @@ namespace WebIluminaMVC.Controllers
         {
             try
             {
-
-                var RemoveAll = db.UserRole.Where(x => x.userID == objUserRoleView.user.userID);
-                db.UserRole.RemoveRange(RemoveAll);
-                db.SaveChanges();
-
-                UserRole objUserRole = new UserRole();
-                foreach (var item in objUserRoleView.roles)
+                if (Request.Form["AddRole"] != null)
                 {
-                    if (item.selected)
+                    var RemoveAll = db.UserRole.Where(x => x.userID == objUserRoleView.user.userID);
+                    db.UserRole.RemoveRange(RemoveAll);
+                    db.SaveChanges();
+
+                    UserRole objUserRole = new UserRole();
+                    foreach (var item in objUserRoleView.roles)
                     {
-                        objUserRole.userID = objUserRoleView.user.userID;
-                        objUserRole.roleID = item.roleID;
-                        db.UserRole.Add(objUserRole);                        
+                        if (item.selected)
+                        {
+                            objUserRole.userID = objUserRoleView.user.userID;
+                            objUserRole.roleID = item.roleID;
+                            db.UserRole.Add(objUserRole);
+                            db.SaveChanges();
+                        }
                     }
                 }
-                db.SaveChanges();
+                if (Request.Form["DelRole"] != null)
+                {
+                    var userRole = db.UserRole.Find(objUserRoleView.userRoleList[0].userRoleID);
+                    db.UserRole.Remove(userRole);
+                    db.SaveChanges();
+
+                }
 
             }
             catch (Exception ex)
             {
 
             }
-            objUserRoleView.userRoleList = db.UserRole.Include(u => u.role).Include(u => u.user).Where(u => u.user.userID == objUserRoleView.user.userID).ToList();
-            objUserRoleView.roles = db.Role.Where(u => u.active).ToList();
-            objUserRoleView.user = db.User.Find(objUserRoleView.user.userID);
-            return View(objUserRoleView);
+            return Index(objUserRoleView.user.userID);
         }
 
-        
+        //[System.Web.Services.WebMethod]
+        [HttpPost]
+        public void Delete(int UserRoleId)
+        {
+            var userRole = db.UserRole.Find(UserRoleId);
+            db.UserRole.Remove(userRole);
+            db.SaveChanges();
+            
+        }
     }
 }

@@ -4,7 +4,8 @@
     ViewBag.Title = "Index";
 }
 
-
+@using (Html.BeginForm())
+{
 <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
 
     <header>
@@ -38,39 +39,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.userRoleList)
+                        @for (var i = 0; i < Model.userRoleList.Count(); i++)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.role.name)
+                                    @Html.DisplayFor(modelItem => Model.userRoleList[i].role.name)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.userRoleID })
+                                        <input id="btnDeleteRole" type="button" value="Eliminar"
+                                           onclick="EliminarRole(@Model.userRoleList[i].userRoleID, @Model.userRoleList[i].userID)" class="btn bg-color-blueDark txt-color-white" />
+
                                 </td>
                             </tr>
+                            @Html.HiddenFor(modelItem => Model.userRoleList[i].userRoleID)
                         }
                     </tbody>
                 </table>
-
-                @*<div class="form-group">
-                    <div class="row">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
-                            @Html.ActionLink("Regresar", "Index", "Users", new { @class = "btn bg-color-blueDark txt-color-white" })
-                        </div>
-                    </div>
-                </div>*@
             </fieldset>
         </div>
     </div>
 </div>
 
-
-<!-- .modal -->
-
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(model => model.user.userID)
+@Html.HiddenFor(model => model.user.userID)
 
 
 
@@ -105,14 +95,14 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(x => Model.roles[i].name)
+                                                @Html.DisplayFor(modelItem => Model.roles[i].name)
                                             </td>
                                             <td>
-                                                @Html.CheckBoxFor(x => Model.roles[i].selected)                                                
+                                                @Html.CheckBoxFor(modelItem => Model.roles[i].selected)                                                
                                             </td>
                                         </tr>
-                                        @Html.HiddenFor(model => model.roles[i].roleID)
-                                        @Html.HiddenFor(model => model.roles[i].selected)
+                                        @Html.HiddenFor(modelItem => Model.roles[i].roleID)
+                                        @Html.HiddenFor(modelItem => Model.roles[i].selected)
                                     }
                                 </tbody>
                             </table>
@@ -120,18 +110,35 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
+                                        <input type="submit" name = "AddRole" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
                                     </div>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
                 </div>   
-
-
             </div>
 
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 }
+
+<script type="text/javascript">
+    function EliminarRole(UserRoleId,UserId) {
+        alert("Hola VH");
+        debugger;
+        var urlSave = '@Url.Action("delete")';
+    $.ajax({
+        type: "POST",
+        url: urlSave,
+        data: '{UserRoleId: "' + UserRoleId + '"}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
+
+    window.location.href = "http://localhost:1311/userroles/index/" + UserId;
+    
+}
+
+</script>
