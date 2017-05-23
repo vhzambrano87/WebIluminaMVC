@@ -6,6 +6,8 @@
 
 @using (Html.BeginForm())
 {
+
+    
 <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
 
     <header>
@@ -45,10 +47,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => Model.userRoleList[i].role.name)
                                 </td>
-                                <td>
-                                        <input id="btnDeleteRole" type="button" value="Eliminar"
-                                           onclick="EliminarRole(@Model.userRoleList[i].userRoleID, @Model.userRoleList[i].userID)" class="btn bg-color-blueDark txt-color-white" />
-
+                                <td> 
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = @Model.userRoleList[i].userRoleID })                                      
+                                    @*<input type="submit" name="ActionForm" value="Eliminar" class="btn bg-color-blueDark txt-color-white"  onclick="EliminarRole(@Model.userRoleList[i].userRoleID, @Model.userRoleList[i].userID)" />*@
                                 </td>
                             </tr>
                             @Html.HiddenFor(modelItem => Model.userRoleList[i].userRoleID)
@@ -108,9 +109,10 @@
                             </table>
 
                             <div class="form-group">
+                                
                                 <div class="row">
                                     <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" name = "AddRole" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
+                                        <input type="submit" name = "ActionForm" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +127,8 @@
 }
 
 <script type="text/javascript">
-    function EliminarRole(UserRoleId,UserId) {
-        alert("Hola VH");
+
+    function EliminarRole(UserRoleId,UserId) {        
         debugger;
         var urlSave = '@Url.Action("delete")';
     $.ajax({
@@ -134,11 +136,13 @@
         url: urlSave,
         data: '{UserRoleId: "' + UserRoleId + '"}',
         contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    });
+        dataType: "json",       
+    });    
+    }
 
-    window.location.href = "http://localhost:1311/userroles/index/" + UserId;
-    
-}
+    function ReloadPage()
+    {
+        location.reload();        
+    }
 
 </script>
