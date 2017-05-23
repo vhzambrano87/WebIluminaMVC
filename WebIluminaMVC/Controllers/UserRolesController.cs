@@ -28,7 +28,6 @@ namespace WebIluminaMVC.Controllers
             objUserRoleView.userRoleList = db.UserRole.Include(u => u.role).Include(u => u.user).Where(u => u.user.userID == id).ToList();
             objUserRoleView.roles = db.Database.SqlQuery<Role>("select r.roleid, r.name, CAST(ISNULL((select 1 from userRoles ur where ur.userID = @userID and ur.roleID = r.roleID),0) AS BIT) selected, r.active, r.createdate, r.createuser, r.updatedate, r.updateuser from roles r where r.active = 1 ", new SqlParameter("@userID", id)).ToList();
             objUserRoleView.user = db.User.Find(id);
-            ModelState.Clear();
             return View(objUserRoleView);
         }
 
@@ -81,7 +80,7 @@ namespace WebIluminaMVC.Controllers
             var userRole = db.UserRole.Find(id);
             db.UserRole.Remove(userRole);
             db.SaveChanges();
-            return View("~Index/"+userRole.userID);
+            return RedirectToAction("Index","UserRoles",new { @id= userRole.userID} );
         }
     }
 }
