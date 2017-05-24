@@ -49,7 +49,7 @@
                                 </td>
                                 <td> 
                                     @Html.ActionLink("Eliminar", "Delete", new { id = @Model.userRoleList[i].userRoleID })                                      
-                                    @*<input type="submit" name="ActionForm" value="Eliminar" class="btn bg-color-blueDark txt-color-white"  onclick="EliminarRole(@Model.userRoleList[i].userRoleID, @Model.userRoleList[i].userID)" />*@
+                                    
                                 </td>
                             </tr>
                             @Html.HiddenFor(modelItem => Model.userRoleList[i].userRoleID)
@@ -125,24 +125,3 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 }
-
-<script type="text/javascript">
-
-    function EliminarRole(UserRoleId,UserId) {        
-        debugger;
-        var urlSave = '@Url.Action("delete")';
-    $.ajax({
-        type: "POST",
-        url: urlSave,
-        data: '{UserRoleId: "' + UserRoleId + '"}',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",       
-    });    
-    }
-
-    function ReloadPage()
-    {
-        location.reload();        
-    }
-
-</script>

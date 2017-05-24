@@ -179,6 +179,7 @@
     <Compile Include="Areas\Landing\Controllers\LandingController.cs" />
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NoticesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -1001,6 +1002,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\realestate\thumbs\" />
+    <Folder Include="Images\Notices\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -1089,6 +1091,11 @@
     <Content Include="Views\UserRoles\Delete.cshtml" />
     <Content Include="Views\UserRoles\Index.cshtml" />
     <None Include="Properties\PublishProfiles\SecurityWeb.pubxml" />
+    <Content Include="Views\Notices\Create.cshtml" />
+    <Content Include="Views\Notices\Delete.cshtml" />
+    <Content Include="Views\Notices\Details.cshtml" />
+    <Content Include="Views\Notices\Edit.cshtml" />
+    <Content Include="Views\Notices\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj">

@@ -1,0 +1,98 @@
+﻿@model WebIluminaMVC.Model.Notice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Notice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.publishDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.publishDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.author)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updateUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updateUser)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.noticeID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
