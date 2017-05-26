@@ -26,7 +26,7 @@ namespace WebIluminaMVC.Model
         [MaxLength(length: 750)]
         [Required(ErrorMessage = "Por favor ingresar {0}")]
         public string contents { get; set; }
-        [Display(Name = "Imagen URL")]
+        [Display(Name = "Imagen")]
         [MaxLength(length: 100)]
         public string imageUrl { get; set; }
         [Display(Name = "Activo")]

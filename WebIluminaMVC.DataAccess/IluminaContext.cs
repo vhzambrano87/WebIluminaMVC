@@ -24,6 +24,7 @@ namespace WebIluminaMVC.DataAccess
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Notice> Notice { get; set; }
-        
+        public virtual DbSet<Employee> Employee { get; set; }
+
     }
 }

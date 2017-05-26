@@ -65,30 +65,13 @@ namespace WebIluminaMVC.Controllers
 
                         notice.imageUrl = fileName;
                         db.Notice.Add(notice);
-                        db.SaveChanges();
+                        db.SaveChanges();                        
 
-                        DirectoryInfo objDirectory = Directory.CreateDirectory(Server.MapPath("~/Images/Notices/" + notice.noticeID));
-                        var path = Path.Combine(Server.MapPath("~/Images/Notices/" + notice.noticeID), fileName);                        
+                        Directory.CreateDirectory(Server.MapPath("~"+System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID));
+                        var path = Path.Combine(Server.MapPath("~"+System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID), fileName);                        
                         file.SaveAs(path);
                     }
                 }
-
-
-                //if (ctrlpublish != null && ctrlpublish.ContentLength > 0)
-                //{
-                //    string fileNameApplication = System.IO.Path.GetFileName(ctrlpublish.FileName);
-                //    string fileExtensionApplication = System.IO.Path.GetExtension(fileNameApplication);
-
-                //    // generating a random guid for a new file at server for the uploaded file
-                //    string newFile = Guid.NewGuid().ToString() + fileExtensionApplication;
-                //    // getting a valid server path to save
-                //    string filePath = System.IO.Path.Combine(Server.MapPath("Images/Notices/"+ notice.noticeID), newFile);
-
-                //    if (fileNameApplication != String.Empty)
-                //    {
-                //        ctrlpublish.SaveAs(filePath);
-                //    }
-                //}
 
 
                 return RedirectToAction("Index");
@@ -115,15 +98,40 @@ namespace WebIluminaMVC.Controllers
         // POST: Notices/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        //[ValidateAntiForgeryToken]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "noticeID,title,publishDate,author,contents,imageUrl,active,createDate,createUser,updateDate,updateUser")] Notice notice)
+        public ActionResult Edit(Notice notice)
         {
             if (ModelState.IsValid)
-            {
+            {               
+            
+                notice.publishDate = DateTime.ParseExact(Request.Form["CtrlPublishDate"], "dd/MM/yyyy", null);
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);                        
+
+                        if (!Directory.Exists(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID)))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID));
+                        }
+                        else
+                        {
+                            System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID + notice.imageUrl));
+                        }
+                        var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID), fileName);
+                        file.SaveAs(path);
+                        notice.imageUrl = fileName;
+                    }
+                }
+
                 db.Entry(notice).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
             return View(notice);
         }

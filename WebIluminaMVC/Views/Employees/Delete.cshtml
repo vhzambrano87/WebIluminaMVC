@@ -1,0 +1,96 @@
+﻿@model WebIluminaMVC.Model.Employee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
+
+    <header>
+        <span class="widget-icon"> <i class="fa fa-eye"></i> </span>
+        <h2>Eliminar Empleado</h2>
+
+    </header>
+    <div>
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body">
+            <fieldset>
+                <h3>@System.Configuration.ConfigurationManager.AppSettings["SecureQuestion"]</h3>
+                <div>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.lastname_first)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.lastname_first)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.lastname_second)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.lastname_second)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.mobilephone)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.mobilephone)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.area)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.area)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.email)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.email)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.active)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.active)
+                        </dd>
+
+
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Eliminar" class="btn bg-color-blueDark txt-color-white" />
+                            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn bg-color-blueDark txt-color-white" })
+                        </div>
+                    }
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+</div>
