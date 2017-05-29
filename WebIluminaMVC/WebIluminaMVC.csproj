@@ -194,6 +194,7 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticesController.cs" />
+    <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\RoleOptionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SuggestionsController.cs" />
@@ -1011,7 +1012,6 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Views\Roles\Delete.cshtml" />
-    <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
@@ -1128,6 +1128,10 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Recover.cshtml" />
     <Content Include="Views\Home\UpdatePassword.cshtml" />
+    <Content Include="Views\Options\Create.cshtml" />
+    <Content Include="Views\Options\Delete.cshtml" />
+    <Content Include="Views\Options\Edit.cshtml" />
+    <Content Include="Views\Options\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj">

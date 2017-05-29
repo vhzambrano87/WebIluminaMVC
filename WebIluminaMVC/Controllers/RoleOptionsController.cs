@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebIluminaMVC.DataAccess;
 using WebIluminaMVC.Model;
+using WebIluminaMVC.ModelView;
 
 namespace WebIluminaMVC.Controllers
 {
@@ -16,122 +18,69 @@ namespace WebIluminaMVC.Controllers
         private IluminaContext db = new IluminaContext();
 
         // GET: RoleOptions
-        public ActionResult Index()
-        {
-            var roleOptions = db.RoleOption.Include(r => r.option).Include(r => r.role);
-            return View(roleOptions.ToList());
-        }
-
-        // GET: RoleOptions/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Index(int? id)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoleOption roleOption = db.RoleOption.Find(id);
-            if (roleOption == null)
-            {
-                return HttpNotFound();
-            }
-            return View(roleOption);
+                id = 0;
+
+            RoleOptionView objRoleOptionView = new RoleOptionView();
+            objRoleOptionView.roleOptionList = db.RoleOption.Include(u => u.option).Include(u => u.role).Where(u => u.role.roleID == id).ToList();
+            objRoleOptionView.options = db.Database.SqlQuery<Option>("select o.optionid, o.name, CAST(ISNULL((select 1 from roleOptions ro where ro.roleID = @roleID and ro.optionID = o.optionID),0) AS BIT) selected, o.active, o.createdate, o.createuser, o.updatedate, o.updateuser from options o where o.active = 1", new SqlParameter("@roleID", id)).ToList();
+            objRoleOptionView.role = db.Role.Find(id);
+            return View(objRoleOptionView);
         }
 
-        // GET: RoleOptions/Create
-        public ActionResult Create()
-        {
-            ViewBag.optionID = new SelectList(db.Options, "optionID", "name");
-            ViewBag.roleID = new SelectList(db.Role, "roleID", "name");
-            return View();
-        }
 
-        // POST: RoleOptions/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "roleOptionID,roleID,optionID")] RoleOption roleOption)
+        public ActionResult Index(RoleOptionView objRoleOptionView)
         {
-            if (ModelState.IsValid)
+            RoleOptionView objRoleOptionView2 = new RoleOptionView();
+            try
             {
-                db.RoleOption.Add(roleOption);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (Request.Form["ActionForm"] == "Registrar")
+                {
+                    var RemoveAll = db.RoleOption.Where(x => x.roleID == objRoleOptionView.role.roleID);
+                    db.RoleOption.RemoveRange(RemoveAll);
+                    db.SaveChanges();
 
-            ViewBag.optionID = new SelectList(db.Options, "optionID", "name", roleOption.optionID);
-            ViewBag.roleID = new SelectList(db.Role, "roleID", "name", roleOption.roleID);
-            return View(roleOption);
+                    RoleOption objRoleOption = new RoleOption();
+                    foreach (var item in objRoleOptionView.options)
+                    {
+                        if (item.selected)
+                        {
+                            objRoleOption.roleID = objRoleOptionView.role.roleID;
+                            objRoleOption.optionID = item.optionID;
+                            db.RoleOption.Add(objRoleOption);
+                            db.SaveChanges();
+                        }
+                    }
+
+
+
+                    objRoleOptionView2.roleOptionList = db.RoleOption.Include(u => u.option).Include(u => u.role).Where(u => u.role.roleID == objRoleOptionView.role.roleID).ToList();
+                    objRoleOptionView2.options = db.Database.SqlQuery<Option>("select o.optionid, o.name, CAST(ISNULL((select 1 from roleOptions ro where ro.roleID = @roleID and ro.optionID = o.optionID),0) AS BIT) selected, o.active, o.createdate, o.createuser, o.updatedate, o.updateuser from options o where o.active = 1", new SqlParameter("@roleID", objRoleOptionView.role.roleID)).ToList();
+                    objRoleOptionView2.role = db.Role.Find(objRoleOptionView.role.roleID);
+
+                    ModelState.Clear();
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return View(objRoleOptionView2);
         }
 
-        // GET: RoleOptions/Edit/5
-        public ActionResult Edit(int? id)
+        //[HttpPost]
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoleOption roleOption = db.RoleOption.Find(id);
-            if (roleOption == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.optionID = new SelectList(db.Options, "optionID", "name", roleOption.optionID);
-            ViewBag.roleID = new SelectList(db.Role, "roleID", "name", roleOption.roleID);
-            return View(roleOption);
-        }
-
-        // POST: RoleOptions/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "roleOptionID,roleID,optionID")] RoleOption roleOption)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(roleOption).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.optionID = new SelectList(db.Options, "optionID", "name", roleOption.optionID);
-            ViewBag.roleID = new SelectList(db.Role, "roleID", "name", roleOption.roleID);
-            return View(roleOption);
-        }
-
-        // GET: RoleOptions/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoleOption roleOption = db.RoleOption.Find(id);
-            if (roleOption == null)
-            {
-                return HttpNotFound();
-            }
-            return View(roleOption);
-        }
-
-        // POST: RoleOptions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            RoleOption roleOption = db.RoleOption.Find(id);
+            var roleOption = db.RoleOption.Find(id);
             db.RoleOption.Remove(roleOption);
             db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return RedirectToAction("Index", "RoleOptions", new { @id = roleOption.roleID });
         }
     }
 }

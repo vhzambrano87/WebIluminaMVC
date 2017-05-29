@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebIluminaMVC.Model.Role>
+﻿@model IEnumerable<WebIluminaMVC.Model.Option>
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +8,7 @@
 
     <header>
         <span class="widget-icon"> <i class="fa fa-eye"></i> </span>
-        <h2>Roles</h2>
+        <h2>Opciones</h2>
 
     </header>
     <div>
@@ -30,44 +30,35 @@
                     <thead>
                         <tr>
                             <th>
-                                RolID
+                                @Html.DisplayNameFor(model => model.name)
                             </th>
                             <th>
-                                Nombre
-                            </th>
-                            <th>
-                                Activo
-                            </th>
+                                @Html.DisplayNameFor(model => model.active)
+                            </th>                           
                             <th></th>
                         </tr>
-
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.roleID)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.name)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.active)
                                 </td>
+                                
                                 <td>
-                                    @Html.ActionLink("Modificar", "Edit", new { id = item.roleID }) |
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.roleID }) |
-                                    @Html.ActionLink("Opciones", "Index", "RoleOptions", new { id = item.roleID }, null)
+                                    @Html.ActionLink("Modificar", "Edit", new { id = item.optionID }) |
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.optionID })
                                 </td>
                             </tr>
                         }
 
                     </tbody>
-
                 </table>
             </fieldset>
         </div>
     </div>
 </div>
-
