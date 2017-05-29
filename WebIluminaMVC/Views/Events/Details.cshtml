@@ -1,0 +1,78 @@
+﻿@model WebIluminaMVC.Model.Event
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@using WebIluminaMVC.Helpers
+<div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
+
+    <header>
+        <span class="widget-icon"> <i class="fa fa-eye"></i> </span>
+        <h2>Detalle Evento</h2>
+
+    </header>
+    <div>
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body">
+            <fieldset>
+
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.title)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.title)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.date)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.date)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.place)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.place)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.imageUrl)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.imageUrl)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.active)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.active)
+                        </dd>
+
+                    </dl>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            @Html.ActionLink("Modificar", "Edit", new { id = Model.eventID }, new { @class = "btn bg-color-blueDark txt-color-white" })
+                            @Html.ActionLink("Regresar", "Index", null, new { @class = "btn bg-color-blueDark txt-color-white" })
+                        </div>
+                    }
+                </div>
+
+            </fieldset>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,15 @@
-﻿@model IEnumerable<WebIluminaMVC.Model.Notice>
+﻿@model IEnumerable<WebIluminaMVC.Model.Event>
 
 @{
     ViewBag.Title = "Index";
 }
+
 @using WebIluminaMVC.Helpers
 <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
 
     <header>
         <span class="widget-icon"> <i class="fa fa-eye"></i> </span>
-        <h2>Noticias</h2>
+        <h2>Eventos</h2>
 
     </header>
     <div>
@@ -30,19 +31,13 @@
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.noticeID)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.title)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.publishDate)
+                                @Html.DisplayNameFor(model => model.date)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.author)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.contents)
+                                @Html.DisplayNameFor(model => model.place)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.imageUrl)
@@ -50,7 +45,18 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.active)
                             </th>
-
+                            <th>
+                                @Html.DisplayNameFor(model => model.createDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.createUser)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.updateDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.updateUser)
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -59,19 +65,13 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.noticeID)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.title)
                                 </td>
                                 <td>
-                                    @Formats.DateFormat(@item.publishDate)
+                                    @Html.DisplayFor(modelItem => item.date)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.author)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.contents)
+                                    @Html.DisplayFor(modelItem => item.place)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.imageUrl)
@@ -80,9 +80,9 @@
                                     @Html.DisplayFor(modelItem => item.active)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Modificar", "Edit", new { id = item.noticeID }) |
-                                    @Html.ActionLink("Detalle", "Details", new { id = item.noticeID }) |
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.noticeID })
+                                    @Html.ActionLink("Modificar", "Edit", new { id = item.eventID }) |
+                                    @Html.ActionLink("Detalle", "Details", new { id = item.eventID }) |
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.eventID })
                                 </td>
                             </tr>
                         }

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<WebIluminaMVC.Model.Suggestion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using WebIluminaMVC.Helpers
+<div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
+
+    <header>
+        <span class="widget-icon"> <i class="fa fa-eye"></i> </span>
+        <h2>Sugerencias</h2>
+
+    </header>
+    <div>
+        <div class="jarviswidget-editbox">
+        </div>
+        <div class="widget-body">
+            <fieldset>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn bg-color-blueDark txt-color-white" })
+                    </div>
+                    <div class="col-sm-8">
+                    </div>
+                </div>
+                <br />
+
+                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.employee.name) 
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.content)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.date)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.employee.name) &nbsp;
+                                    @Html.DisplayFor(modelItem => item.employee.lastname_first) &nbsp;
+                                    @Html.DisplayFor(modelItem => item.employee.lastname_second)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.content)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.date)
+                                </td>
+                                <td>
+                                     @Html.ActionLink("Detalle", "Details", new { id = item.suggestionID })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+</div>

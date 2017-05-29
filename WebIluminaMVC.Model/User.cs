@@ -55,6 +55,10 @@ namespace WebIluminaMVC.Model
         [NotMapped]
         [Display(Name = "U. Modificador")]
         public string updateUserStr { get; set; }
+        [NotMapped]
+        public string newpassword { get; set; }
+        [NotMapped]
+        public int result { get; set; }
 
         public virtual ICollection<UserRole> userRoles { get; set; }
     }

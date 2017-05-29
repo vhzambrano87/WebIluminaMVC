@@ -191,9 +191,12 @@
     <Compile Include="Areas\Landing\Controllers\LandingController.cs" />
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticesController.cs" />
+    <Compile Include="Controllers\RoleOptionsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SuggestionsController.cs" />
     <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -297,6 +300,7 @@
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\invoice.min.css" />
     <Content Include="Content\css\lockscreen.min.css" />
+    <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\smartadmin-production-plugins.min.css" />
     <Content Include="Content\css\smartadmin-production.min.css" />
     <Content Include="Content\css\smartadmin-rtl.min.css" />
@@ -1000,8 +1004,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
@@ -1101,7 +1103,6 @@
     <Content Include="Views\Shared\_TermsAndConditions.cshtml" />
     <Content Include="Views\Shared\_Tiles.cshtml" />
     <Content Include="Views\Shared\_TopRight.cshtml" />
-    <Content Include="Views\UserRoles\Create.cshtml" />
     <Content Include="Views\UserRoles\Delete.cshtml" />
     <Content Include="Views\UserRoles\Index.cshtml" />
     <None Include="Properties\PublishProfiles\SecurityWeb.pubxml" />
@@ -1115,6 +1116,18 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Suggestions\Details.cshtml" />
+    <Content Include="Views\Suggestions\Index.cshtml" />
+    <Content Include="Views\RoleOptions\Delete.cshtml" />
+    <Content Include="Views\RoleOptions\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Recover.cshtml" />
+    <Content Include="Views\Home\UpdatePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj">
