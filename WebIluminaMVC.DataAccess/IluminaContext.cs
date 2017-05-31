@@ -28,7 +28,6 @@ namespace WebIluminaMVC.DataAccess
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<Suggestion> Suggestion { get; set; }
-
-        public System.Data.Entity.DbSet<WebIluminaMVC.Model.Option> Options { get; set; }
+        public virtual DbSet<Option> Option { get; set; }
     }
 }

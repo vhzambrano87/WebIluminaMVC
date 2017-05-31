@@ -18,7 +18,7 @@ namespace WebIluminaMVC.Controllers
         // GET: Options
         public ActionResult Index()
         {
-            return View(db.Options.ToList());
+            return View(db.Option.ToList());
         }
 
         // GET: Options/Details/5
@@ -28,7 +28,7 @@ namespace WebIluminaMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Option option = db.Options.Find(id);
+            Option option = db.Option.Find(id);
             if (option == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace WebIluminaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Options.Add(option);
+                db.Option.Add(option);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace WebIluminaMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Option option = db.Options.Find(id);
+            Option option = db.Option.Find(id);
             if (option == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace WebIluminaMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Option option = db.Options.Find(id);
+            Option option = db.Option.Find(id);
             if (option == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Option option = db.Options.Find(id);
-            db.Options.Remove(option);
+            Option option = db.Option.Find(id);
+            db.Option.Remove(option);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
