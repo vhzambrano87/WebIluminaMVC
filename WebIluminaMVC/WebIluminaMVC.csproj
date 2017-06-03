@@ -1018,6 +1018,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\realestate\thumbs\" />
+    <Folder Include="Images\Events\" />
     <Folder Include="Images\Notices\" />
     <Folder Include="Models\" />
   </ItemGroup>

@@ -104,8 +104,7 @@ namespace WebIluminaMVC.Controllers
         public ActionResult Edit(Notice notice)
         {
             if (ModelState.IsValid)
-            {               
-            
+            {   
                 notice.publishDate = DateTime.ParseExact(Request.Form["CtrlPublishDate"], "dd/MM/yyyy", null);
 
                 if (Request.Files.Count > 0)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -51,8 +52,27 @@ namespace WebIluminaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Event.Add(@event);
-                db.SaveChanges();
+                @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
+
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+
+                        @event.imageUrl = fileName;
+                        db.Event.Add(@event);
+                        db.SaveChanges();
+
+                        Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
+                        var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID), fileName);
+                        file.SaveAs(path);
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -79,13 +99,36 @@ namespace WebIluminaMVC.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "eventID,title,date,place,imageUrl,active,createDate,createUser,updateDate,updateUser")] Event @event)
+        public ActionResult Edit(Event @event)
         {
             if (ModelState.IsValid)
             {
+                @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
+
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+
+                        if (!Directory.Exists(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID)))
+                        {
+                            Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
+                        }
+                        else
+                        {
+                            System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID + @event.imageUrl));
+                        }
+                        var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvennt"] + @event.eventID), fileName);
+                        file.SaveAs(path);
+                        @event.imageUrl = fileName;
+                    }
+                }
+
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
             return View(@event);
         }
