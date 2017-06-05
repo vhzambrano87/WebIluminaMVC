@@ -18,23 +18,33 @@ namespace WebIluminaMVC.Controllers
         // GET: Suggestions
         public ActionResult Index()
         {
-            var suggestion = db.Suggestion.Include(s => s.employee);
-            return View(suggestion.ToList());
+            if (DataUtil.Validation())
+            {
+                var suggestion = db.Suggestion.Include(s => s.employee);
+                return View(suggestion.ToList());
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Suggestions/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Suggestion suggestion = db.Suggestion.Find(id);
+                if (suggestion == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(suggestion);
             }
-            Suggestion suggestion = db.Suggestion.Find(id);
-            if (suggestion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(suggestion);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         

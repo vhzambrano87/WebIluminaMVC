@@ -13,33 +13,44 @@ namespace WebIluminaMVC.Controllers
 {
     public class EmployeesController : Controller
     {
-        private IluminaContext db = new IluminaContext();
+        private IluminaContext db = new IluminaContext();        
 
         // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Employee.ToList());
+            if (DataUtil.Validation())
+                return View(db.Employee.ToList());
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Employee employee = db.Employee.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(employee);
             }
-            Employee employee = db.Employee.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
+            else
+                return RedirectToAction("Login", "Home");            
         }
 
         // GET: Employees/Create
         public ActionResult Create()
         {
-            return View();
+            if(DataUtil.Validation())
+                return View();
+            else
+                return RedirectToAction("Login", "Home");            
         }
 
         // POST: Employees/Create
@@ -49,29 +60,39 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "employeeID,name,lastname_first,lastname_second,mobilephone,area,email,active,createDate,createUser,updateDate,updateUser")] Employee employee)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Employee.Add(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Employee.Add(employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(employee);
+                return View(employee);
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Employee employee = db.Employee.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(employee);
             }
-            Employee employee = db.Employee.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Employees/Edit/5
@@ -81,28 +102,38 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "employeeID,name,lastname_first,lastname_second,mobilephone,area,email,active,createDate,createUser,updateDate,updateUser")] Employee employee)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Entry(employee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(employee).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(employee);
             }
-            return View(employee);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Employee employee = db.Employee.Find(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(employee);
             }
-            Employee employee = db.Employee.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Employees/Delete/5
@@ -110,10 +141,15 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Employee employee = db.Employee.Find(id);
-            db.Employee.Remove(employee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (DataUtil.Validation())
+            {
+                Employee employee = db.Employee.Find(id);
+                db.Employee.Remove(employee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         protected override void Dispose(bool disposing)

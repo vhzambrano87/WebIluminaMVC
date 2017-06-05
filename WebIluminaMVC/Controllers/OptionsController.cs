@@ -18,28 +18,39 @@ namespace WebIluminaMVC.Controllers
         // GET: Options
         public ActionResult Index()
         {
-            return View(db.Option.ToList());
+            if(DataUtil.Validation())
+                return View(db.Option.ToList());
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Options/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Option option = db.Option.Find(id);
+                if (option == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(option);
             }
-            Option option = db.Option.Find(id);
-            if (option == null)
-            {
-                return HttpNotFound();
-            }
-            return View(option);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Options/Create
         public ActionResult Create()
         {
+            if(DataUtil.Validation())
             return View();
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Options/Create
@@ -49,29 +60,39 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "optionID,name,active,createDate,createUser,updateDate,updateUser,selected")] Option option)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Option.Add(option);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Option.Add(option);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(option);
+                return View(option);
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Options/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Option option = db.Option.Find(id);
+                if (option == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(option);
             }
-            Option option = db.Option.Find(id);
-            if (option == null)
-            {
-                return HttpNotFound();
-            }
-            return View(option);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Options/Edit/5
@@ -81,28 +102,38 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "optionID,name,active,createDate,createUser,updateDate,updateUser,selected")] Option option)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Entry(option).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(option).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(option);
             }
-            return View(option);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Options/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Option option = db.Option.Find(id);
+                if (option == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(option);
             }
-            Option option = db.Option.Find(id);
-            if (option == null)
-            {
-                return HttpNotFound();
-            }
-            return View(option);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Options/Delete/5
@@ -110,10 +141,15 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Option option = db.Option.Find(id);
-            db.Option.Remove(option);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (DataUtil.Validation())
+            {
+                Option option = db.Option.Find(id);
+                db.Option.Remove(option);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         protected override void Dispose(bool disposing)

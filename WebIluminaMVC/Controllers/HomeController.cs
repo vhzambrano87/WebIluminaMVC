@@ -14,13 +14,15 @@ namespace WebIluminaMVC.Controllers
         private IluminaContext db = new IluminaContext();
         public ActionResult Index()
         {
-            return View();
+            if (DataUtil.Validation())
+                return View();
+            else
+                return RedirectToAction("Login","Home");
         }
 
         public ActionResult Login()
         {
-            Session["USR_COD"] = "";
-            Session["USR_NAME"] = "";
+            Session["USR_SESSION"] = "";
             Session["USR_OPCION"] = "[]";
             User objUser = new User();
             return View(objUser);
@@ -29,12 +31,12 @@ namespace WebIluminaMVC.Controllers
         [HttpPost]
         public ActionResult Login(User objUser)
         {
-            List<User> users = db.User.Where(u => u.username == objUser.username && u.password == objUser.password).ToList();
+            var user = db.User.FirstOrDefault(u => u.username == objUser.username && u.password == objUser.password && u.active==true);
 
-            if (users.Count > 0)
+            if (user!=null)
             {
-                Session["USR_COD"] = users[0].username.ToUpper();
-                Session["USR_NAME"] = "Bienvenido(a) " + users[0].name;
+                user.messageWelcome = "Bienvenido(a) " + user.name + " " + user.lastname;
+                Session["USR_SESSION"] = user;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -52,15 +54,14 @@ namespace WebIluminaMVC.Controllers
 
         [HttpPost]
         public ActionResult Recover(User objUser)
-        {
-            Email oEmailBL = new Email();
+        {            
             User oUser = new User();
 
             oUser = db.User.FirstOrDefault(u => u.username.ToUpper() == objUser.username.ToUpper());
 
             if (oUser != null)
             {
-                oEmailBL.SendMail("Estimado usuario(a), su contraseña es: " + oUser.password, "Recuperación de contraseña", oUser.email, "");
+                DataUtil.SendMail("Estimado usuario(a), su contraseña es: " + oUser.password, "Recuperación de contraseña", oUser.email, "");
                 objUser.result = 1;
             }
             else
@@ -85,8 +86,7 @@ namespace WebIluminaMVC.Controllers
             }
             else
             {
-                Email objEmail = new Email();
-                User oUser = new User();
+                 User oUser = new User();
 
                 oUser = db.User.FirstOrDefault(u => u.username.ToUpper() == objUser.username.ToUpper() && u.password == objUser.password);
 

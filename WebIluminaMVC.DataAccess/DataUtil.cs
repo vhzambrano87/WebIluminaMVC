@@ -4,12 +4,29 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using WebIluminaMVC.Model;
 
-namespace WebIluminaMVC.Model
+namespace WebIluminaMVC.DataAccess
 {
-    public class Email
+    public sealed class DataUtil
     {
-        public Boolean SendMail(string mensaje, string asunto, string mailDestino, string url)
+        IluminaContext db = new IluminaContext();
+
+        public static User GetUser()
+        {
+            return (User)HttpContext.Current.Session["USR_SESSION"];
+        }
+
+        public static bool Validation()
+        {
+            if (DataUtil.GetUser() == null)
+                return false;
+            else
+                return true;
+        }
+
+        public static Boolean SendMail(string mensaje, string asunto, string mailDestino, string url)
         {
             try
             {
@@ -29,7 +46,6 @@ namespace WebIluminaMVC.Model
                 {
                     mail.Attachments.Add(new Attachment(url));
                 }
-
                 //Configuracion del SMTP
                 SmtpServer.Port = 587; //Puerto que utiliza Gmail para sus servicios
                 //Especificamos las credenciales con las que enviaremos el mail
@@ -49,5 +65,6 @@ namespace WebIluminaMVC.Model
             }
 
         }
+
     }
 }

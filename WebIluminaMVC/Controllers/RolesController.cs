@@ -18,28 +18,39 @@ namespace WebIluminaMVC.Controllers
         // GET: Roles
         public ActionResult Index()
         {
+            if(DataUtil.Validation())
             return View(db.Role.ToList().OrderBy(x => x.name));
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Roles/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Role.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Role.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Roles/Create
         public ActionResult Create()
         {
-            return View();
+            if(DataUtil.Validation())
+                return View();
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Roles/Create
@@ -49,29 +60,39 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "roleID,name,active,createDate,createUser,updateDate,updateUser")] Role role)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Role.Add(role);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Role.Add(role);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(role);
+                return View(role);
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Roles/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Role.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Role.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Roles/Edit/5
@@ -81,28 +102,38 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "roleID,name,active,createDate,createUser,updateDate,updateUser")] Role role)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                db.Entry(role).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(role).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(role);
             }
-            return View(role);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Roles/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Role role = db.Role.Find(id);
+                if (role == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(role);
             }
-            Role role = db.Role.Find(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Roles/Delete/5
@@ -110,10 +141,15 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Role role = db.Role.Find(id);
-            db.Role.Remove(role);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (DataUtil.Validation())
+            {
+                Role role = db.Role.Find(id);
+                db.Role.Remove(role);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         protected override void Dispose(bool disposing)

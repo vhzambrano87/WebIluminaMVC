@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Employee.cs" />
     <Compile Include="Event.cs" />
-    <Compile Include="Email.cs" />
     <Compile Include="Notice.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

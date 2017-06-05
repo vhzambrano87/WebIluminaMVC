@@ -19,28 +19,39 @@ namespace WebIluminaMVC.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            return View(db.Event.ToList());
+            if(DataUtil.Validation())
+                return View(db.Event.ToList());
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Event @event = db.Event.Find(id);
+                if (@event == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(@event);
             }
-            Event @event = db.Event.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Events/Create
         public ActionResult Create()
         {
-            return View();
+            if(DataUtil.Validation())
+                return View();
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Events/Create
@@ -50,48 +61,58 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "eventID,title,date,place,imageUrl,active,createDate,createUser,updateDate,updateUser")] Event @event)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
-
-
-                if (Request.Files.Count > 0)
+                if (ModelState.IsValid)
                 {
-                    var file = Request.Files[0];
+                    @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
 
-                    if (file != null && file.ContentLength > 0)
+
+                    if (Request.Files.Count > 0)
                     {
-                        var fileName = Path.GetFileName(file.FileName);
+                        var file = Request.Files[0];
 
-                        @event.imageUrl = fileName;
-                        db.Event.Add(@event);
-                        db.SaveChanges();
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var fileName = Path.GetFileName(file.FileName);
 
-                        Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
-                        var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID), fileName);
-                        file.SaveAs(path);
+                            @event.imageUrl = fileName;
+                            db.Event.Add(@event);
+                            db.SaveChanges();
+
+                            Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
+                            var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID), fileName);
+                            file.SaveAs(path);
+                        }
                     }
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
+                return View(@event);
             }
-
-            return View(@event);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Event @event = db.Event.Find(id);
+                if (@event == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(@event);
             }
-            Event @event = db.Event.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Events/Edit/5
@@ -101,51 +122,61 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Event @event)
         {
-            if (ModelState.IsValid)
+            if (DataUtil.Validation())
             {
-                @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
-
-                if (Request.Files.Count > 0)
+                if (ModelState.IsValid)
                 {
-                    var file = Request.Files[0];
+                    @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
 
-                    if (file != null && file.ContentLength > 0)
+                    if (Request.Files.Count > 0)
                     {
-                        var fileName = Path.GetFileName(file.FileName);
+                        var file = Request.Files[0];
 
-                        if (!Directory.Exists(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID)))
+                        if (file != null && file.ContentLength > 0)
                         {
-                            Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
+                            var fileName = Path.GetFileName(file.FileName);
+
+                            if (!Directory.Exists(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID)))
+                            {
+                                Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID));
+                            }
+                            else
+                            {
+                                System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID + @event.imageUrl));
+                            }
+                            var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvennt"] + @event.eventID), fileName);
+                            file.SaveAs(path);
+                            @event.imageUrl = fileName;
                         }
-                        else
-                        {
-                            System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID + @event.imageUrl));
-                        }
-                        var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvennt"] + @event.eventID), fileName);
-                        file.SaveAs(path);
-                        @event.imageUrl = fileName;
                     }
-                }
 
-                db.Entry(@event).State = EntityState.Modified;
-                db.SaveChanges();
+                    db.Entry(@event).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return View(@event);
             }
-            return View(@event);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // GET: Events/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (DataUtil.Validation())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Event @event = db.Event.Find(id);
+                if (@event == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(@event);
             }
-            Event @event = db.Event.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         // POST: Events/Delete/5
@@ -153,10 +184,15 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = db.Event.Find(id);
-            db.Event.Remove(@event);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (DataUtil.Validation())
+            {
+                Event @event = db.Event.Find(id);
+                db.Event.Remove(@event);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Login", "Home");
         }
 
         protected override void Dispose(bool disposing)

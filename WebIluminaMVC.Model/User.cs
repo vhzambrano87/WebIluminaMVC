@@ -59,7 +59,12 @@ namespace WebIluminaMVC.Model
         public string newpassword { get; set; }
         [NotMapped]
         public int result { get; set; }
-
+        [NotMapped]
+        public string messageErrorUser { get; set; }
+        [NotMapped]
+        public string messageErrorEmail { get; set; }
+        [NotMapped]
+        public string messageWelcome { get; set; }
         public virtual ICollection<UserRole> userRoles { get; set; }
     }
 }
