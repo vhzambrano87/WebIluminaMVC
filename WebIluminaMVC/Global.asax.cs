@@ -18,6 +18,7 @@ namespace WebIluminaMVC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataAccess.IluminaContext,  DataAccess.Migrations.Configuration>());
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

@@ -1024,6 +1024,7 @@
     <Folder Include="Content\img\realestate\thumbs\" />
     <Folder Include="Images\Events\" />
     <Folder Include="Images\Notices\" />
+    <Folder Include="Log\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

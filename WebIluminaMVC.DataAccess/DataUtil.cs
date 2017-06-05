@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -12,18 +13,35 @@ namespace WebIluminaMVC.DataAccess
     public sealed class DataUtil
     {
         IluminaContext db = new IluminaContext();
-
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        
         public static User GetUser()
         {
             return (User)HttpContext.Current.Session["USR_SESSION"];
         }
-
         public static bool Validation()
         {
             if (DataUtil.GetUser() == null)
                 return false;
             else
                 return true;
+        }
+
+        public bool ValidateOption(int user_id, int option_id)
+        {
+           var userRoles =  db.UserRole.Where(u=>u.userID==user_id);
+            var roleOptions = db.RoleOption.Where(u=>u.optionID == option_id);
+            foreach (var item in userRoles)
+            {
+                if (roleOptions.Where(u => u.roleID == item.roleID).Count()>0)
+                    return true;
+            }
+            return false;
+        }
+
+        public Option GetOption(int id)
+        {
+            return db.Option.FirstOrDefault(u=>u.optionID == id);
         }
 
         public static Boolean SendMail(string mensaje, string asunto, string mailDestino, string url)
@@ -60,7 +78,7 @@ namespace WebIluminaMVC.DataAccess
             }
             catch (Exception ex)
             {
-                //Logger.Write("Error Email: " + ex.Message);
+                _log.Error("Error Email: " + ex.Message);
                 return false;
             }
 

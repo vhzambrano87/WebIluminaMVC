@@ -1,31 +1,56 @@
-﻿<aside id="left-panel">
+﻿@using WebIluminaMVC.DataAccess
+@{ 
+    var option = new DataUtil();
+}
+<aside id="left-panel">
 
     <nav>
         <ul>
             <li>
                 <a href="#" title="Maestros"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Maestros</span></a>
                 <ul>
-                    <li>
-                        <a href="@Url.Action("index", "Users")" title="Maestros"><span class="menu-item-parent">Usuarios</span></a>
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 1))
+                    {
+                    <li>                        
+                        <a href="@Url.Action("index", "Users")" title="Maestros"><span class="menu-item-parent">@option.GetOption(1).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 2))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Roles")" title="Maestros"><span class="menu-item-parent">Roles</span></a>
+                        <a href="@Url.Action("index", "Roles")" title="Maestros"><span class="menu-item-parent">@option.GetOption(2).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 3))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Options")" title="Maestros"><span class="menu-item-parent">Opciones</span></a>
+                        <a href="@Url.Action("index", "Options")" title="Maestros"><span class="menu-item-parent">@option.GetOption(3).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 4))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Employees")" title="Maestros"><span class="menu-item-parent">Empleados</span></a>
+                        <a href="@Url.Action("index", "Employees")" title="Maestros"><span class="menu-item-parent">@option.GetOption(4).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 5))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Events")" title="Maestros"><span class="menu-item-parent">Eventos</span></a>
+                        <a href="@Url.Action("index", "Events")" title="Maestros"><span class="menu-item-parent">@option.GetOption(5).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 6))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Notices")" title="Maestros"><span class="menu-item-parent">Noticias</span></a>
+                        <a href="@Url.Action("index", "Notices")" title="Maestros"><span class="menu-item-parent">@option.GetOption(6).name</span></a>
                     </li>
+                    }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 7))
+                    {
                     <li>
-                        <a href="@Url.Action("index", "Suggestions")" title="Maestros"><span class="menu-item-parent">Sugerencias</span></a>
+                        <a href="@Url.Action("index", "Suggestions")" title="Maestros"><span class="menu-item-parent">@option.GetOption(7).name</span></a>
                     </li>
+                    }
                 </ul>
             </li>
             
