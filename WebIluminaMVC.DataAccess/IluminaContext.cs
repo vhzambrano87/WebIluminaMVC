@@ -29,5 +29,9 @@ namespace WebIluminaMVC.DataAccess
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<Suggestion> Suggestion { get; set; }
         public virtual DbSet<Option> Option { get; set; }
+        public virtual DbSet<Survey> Survey { get; set; }
+        public virtual DbSet<SurveyDetail> SurveyDetail { get; set; }
+        public virtual DbSet<SurveyDetailOption> SurveyDetailOption { get; set; }
+
     }
 }
