@@ -76,7 +76,7 @@ namespace WebIluminaMVC.Controllers
                         {
                             var fileName = Path.GetFileName(file.FileName);
 
-                            @event.imageUrl = fileName;
+                            @event.imageUrl = System.Configuration.ConfigurationManager.AppSettings["URLImageEvent"] + @event.eventID + "/" + fileName; ;
                             db.Event.Add(@event);
                             db.SaveChanges();
 
@@ -142,11 +142,13 @@ namespace WebIluminaMVC.Controllers
                             }
                             else
                             {
-                                System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID + @event.imageUrl));
+                                System.IO.File.Delete(@event.imageUrl);
                             }
-                            var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvennt"] + @event.eventID), fileName);
+                            
+                            @event.imageUrl = System.Configuration.ConfigurationManager.AppSettings["URLImageEvent"] + @event.eventID + "/" + fileName;
+
+                            var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageEvent"] + @event.eventID), fileName);
                             file.SaveAs(path);
-                            @event.imageUrl = fileName;
                         }
                     }
 

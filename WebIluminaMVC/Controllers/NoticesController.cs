@@ -75,13 +75,15 @@ namespace WebIluminaMVC.Controllers
                         if (file != null && file.ContentLength > 0)
                         {
                             var fileName = Path.GetFileName(file.FileName);
-
-                            notice.imageUrl = fileName;
+                                                    
+                            
+                            notice.imageUrl = System.Configuration.ConfigurationManager.AppSettings["URLImageNotice"] + notice.noticeID + "/" + fileName; 
                             db.Notice.Add(notice);
                             db.SaveChanges();
 
                             Directory.CreateDirectory(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID));
                             var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID), fileName);
+
                             file.SaveAs(path);
                         }
                     }
@@ -144,11 +146,17 @@ namespace WebIluminaMVC.Controllers
                             }
                             else
                             {
-                                System.IO.File.Delete(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID + notice.imageUrl));
+                                System.IO.File.Delete(notice.imageUrl);
                             }
+
+                            notice.imageUrl = System.Configuration.ConfigurationManager.AppSettings["URLImageNotice"] + notice.noticeID + "/" + fileName;
+
                             var path = Path.Combine(Server.MapPath("~" + System.Configuration.ConfigurationManager.AppSettings["RouteImageNotice"] + notice.noticeID), fileName);
+                            
+                            
                             file.SaveAs(path);
-                            notice.imageUrl = fileName;
+
+                            
                         }
                     }
 

@@ -13,7 +13,7 @@ namespace WebIluminaMVC.DataAccess
     public sealed class DataUtil
     {
         IluminaContext db = new IluminaContext();
-        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         public static User GetUser()
         {
@@ -78,7 +78,7 @@ namespace WebIluminaMVC.DataAccess
             }
             catch (Exception ex)
             {
-                _log.Error("Error Email: " + ex.Message);
+                //_log.Error("Error Email: " + ex.Message);
                 return false;
             }
 

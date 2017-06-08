@@ -46,7 +46,7 @@
                             <section class="col col-6">
                                 <label class="input">
                                     <i class="icon-append fa fa-calendar"></i>
-                                    <input type="text" name="CtrlDate" placeholder="" class="datepicker" data-dateformat='dd/mm/yy' value="@Formats.DateFormat(@Model.publishDate)">
+                                    <input type="text" name="CtrlDate" placeholder="" class="datepicker" data-dateformat='dd/mm/yy' value="@Formats.DateFormat(@Model.date)">
 
                                 </label>
                             </section>
@@ -68,7 +68,7 @@
                                     archivos: .png .gih .jpeg
                                 </p>
                                 <br />
-                                <img src="/Images/Notices/@Model.eventID/@Model.imageUrl" style="height:300px;width:300px;" />
+                                <img src="@Model.imageUrl" style="height:300px;width:300px;" />
                             </div>    
                         </div>
 
