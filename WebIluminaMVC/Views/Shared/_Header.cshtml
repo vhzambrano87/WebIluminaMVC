@@ -2,11 +2,11 @@
     <!-- HEADER -->
 <header id="header">
     <div id="logo-group">        
-            <span id="logo"> <img src="~/content/img/logo.png" alt="SmartAdmin"> </span>
+            <span id="logo"> <img src="@Settings.CurrentLogo" alt="SmartAdmin"> </span>
     </div>
     <div>
         <br />
-        @DataUtil.GetUser().messageWelcome
+        <span class="project-selector"> @DataUtil.GetUser().messageWelcome </span>
     </div>
 
 

@@ -2,14 +2,14 @@
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;  
 	color:white;  
 	font-size:12px;  
-	background:#333 ;}
+	}
 
 form { 
-	background:#111;   
+	background:rgba(0,0,0,.18)!important;   
 	width:300px;  
 	margin:30px auto;  
 	border-radius:0.4em;  
-	border:1px solid #191919;  
+	border:1px solid white;  
 	overflow:hidden;  
 	position:relative;  
 	box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
@@ -38,7 +38,7 @@ form:before {
 	}
 .inset { 
 	padding:20px;   
-	border-top:1px solid #19191a;
+	border-top:1px solid white;
 	}
 	
 form h1 {  
@@ -46,7 +46,7 @@ form h1 {
 	text-shadow:0 1px 0 black;  
 	text-align:center;  
 	padding:15px 0;  
-	border-bottom:1px solid rgba(0,0,0,1);  
+	/*border-bottom:1px solid rgba(0,0,0,1);*/  
 	position:relative;
 	}
 	
@@ -63,15 +63,15 @@ form h1:after {
 	background:linear-gradient(50deg, rgba(255,255,255,0.15), rgba(0,0,0,0));  
 	}
 label { 
-	color:#666;  
+	color:white;  
 	display:block;  
 	padding-bottom:9px;
 	}
 input[type=text],input[type=password]{ 
 	width:100%;  
 	padding:8px 5px;  
-	background:linear-gradient(#1f2124, #27292c);  
-	border:1px solid #222;  
+	/*background:linear-gradient(#1f2124, #27292c);*/  
+	border:1px solid ;  
 	box-shadow:    0 1px 0 rgba(255,255,255,0.1);  
 	border-radius:0.3em;  
     margin-bottom:20px;

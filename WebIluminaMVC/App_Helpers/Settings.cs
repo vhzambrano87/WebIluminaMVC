@@ -46,6 +46,11 @@ namespace WebIluminaMVC
         public static readonly string CurrentTheme = GetValue<string>("CurrentTheme");
 
         /// <summary>
+        ///     Retrieves the entry value for the following composed key: "config:CurrentLogo" as a string.
+        /// </summary>
+        public static readonly string CurrentLogo = GetValue<string>("CurrentLogo");
+
+        /// <summary>
         ///     Gets the entry for the given key and prefix and retrieves its value as the specified type.
         ///     <para>If no prefix is specified the default prefix value ("config") will be used.</para>
         ///     <para>
