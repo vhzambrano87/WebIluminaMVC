@@ -26,6 +26,11 @@ namespace WebIluminaMVC
         public static readonly string Company = GetValue<string>("Company");
 
         /// <summary>
+        ///     Retrieves the entry value for the following composed key: "config:Company" as a string.
+        /// </summary>
+        public static readonly string Background = GetValue<string>("Background");
+
+        /// <summary>
         ///     Retrieves the entry value for the following composed key: "config:Project" as a string.
         /// </summary>
         public static readonly string Project = GetValue<string>("Project");

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebIluminaMVC.DataAccess;
 using WebIluminaMVC.Model;
+using WebIluminaMVC.ModelView;
 
 namespace WebIluminaMVC.Controllers
 {
@@ -39,7 +40,9 @@ namespace WebIluminaMVC.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            return View();
+            SurveyView objSurveyView = new SurveyView(); 
+            
+            return View(objSurveyView);
         }
 
         // POST: Surveys/Create
@@ -49,7 +52,7 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "surveyID,name,dateFrom,dateTo,active,createDate,createUser,updateDate,updateUser")] Survey survey)
         {
-            if (ModelState.IsValid)
+           if (ModelState.IsValid)
             {
                 db.Survey.Add(survey);
                 db.SaveChanges();

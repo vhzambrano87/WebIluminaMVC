@@ -51,6 +51,12 @@
                         <a href="@Url.Action("index", "Suggestions")" title="Maestros"><span class="menu-item-parent">@option.GetOption(7).name</span></a>
                     </li>
                     }
+                    @if (option.ValidateOption(DataUtil.GetUser().userID, 8))
+                    {
+                        <li>
+                            <a href="@Url.Action("index", "Surveys")" title="Maestros"><span class="menu-item-parent">@option.GetOption(8).name</span></a>
+                        </li>
+                    }
                 </ul>
             </li>
             

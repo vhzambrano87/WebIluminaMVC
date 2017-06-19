@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleOptionView.cs" />
+    <Compile Include="SurveyView.cs" />
     <Compile Include="UserRoleView.cs" />
   </ItemGroup>
   <ItemGroup>
