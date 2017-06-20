@@ -50,16 +50,26 @@ namespace WebIluminaMVC.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "surveyID,name,dateFrom,dateTo,active,createDate,createUser,updateDate,updateUser")] Survey survey)
+        public ActionResult Create(SurveyView surveyView)
         {
-           if (ModelState.IsValid)
+            if (surveyView.survey.surveyID != 0)
             {
-                db.Survey.Add(survey);
+
+                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
+                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
+
+                db.Entry(surveyView.survey).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+            }
+            else
+            {
+                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
+                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
+                db.Survey.Add(surveyView.survey);
+                db.SaveChanges();
             }
 
-            return View(survey);
+            return View(surveyView);
         }
 
         // GET: Surveys/Edit/5
