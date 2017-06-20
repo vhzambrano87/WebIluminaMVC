@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,12 @@ namespace WebIluminaMVC.Model
         [Key]
         public int surveyDetailID { get; set; }
         public int surveyID { get; set; }
-        [Display(Name = "Nombres")]
+        [Display(Name = "Preguntas")]
         [MaxLength(length: 500)]
         public string name { get; set; }
-        public int type { get; set; }
+        [Display(Name = "Tipo")]
+        public string type { get; set; }
+        [Display(Name = "Activo")]
         public bool active { get; set; }
         [Display(Name = "F. Creación")]
         public DateTime? createDate { get; set; }

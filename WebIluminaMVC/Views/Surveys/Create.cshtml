@@ -1,5 +1,5 @@
 ﻿@model WebIluminaMVC.ModelView.SurveyView
-
+@using WebIluminaMVC.Helpers;
 @{
     ViewBag.Title = "Create";
 }
@@ -21,122 +21,134 @@
             <fieldset>
 
 
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(model => model.survey.createUser)
-                    @Html.HiddenFor(model => model.survey.createDate)
-                    @Html.HiddenFor(model => model.survey.updateUser)
-                    @Html.HiddenFor(model => model.survey.updateDate)
-                    @Html.HiddenFor(model => model.survey.surveyID)
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <br />
-                        <div class="form-group">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => Model.survey.createUser)
+                @Html.HiddenFor(model => Model.survey.createDate)
+                @Html.HiddenFor(model => Model.survey.updateUser)
+                @Html.HiddenFor(model => Model.survey.updateDate)
+                <input name="SurveyID" type="hidden" value="@Model.survey.surveyID" />
+
+                @*<div class="form-horizontal">*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <br />
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-8">
                             @Html.LabelFor(model => model.survey.name, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 @Html.EditorFor(model => model.survey.name, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.survey.name, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="form-group col-md-12">
-                                    @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlDateFrom" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="form-group col-md-12">
-                                    @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlDateTo" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.survey.active, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-4">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.survey.active)
-                                    @Html.ValidationMessageFor(model => model.survey.active, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-
-                                @if (Model.survey.surveyID == 0)
-                                {
-                                    <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
-                                }
-                                else
-                                {
-                                    <a data-toggle="modal" href="#mySurveyDetail" class="btn bg-color-blueDark txt-color-white header-btn hidden-mobile"><i class="fa fa-circle-arrow-up fa-lg"></i> Agregar Preguntas</a>
-                                }
-                            </div>
-                        </div>
-
-
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-8">
+                            @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="input-group col-md-3">
+                                <input type="text" name="CtrlDateFrom" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.survey.dateFrom)">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-8">
+                            @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="input-group col-md-3">
+                                <input type="text" name="CtrlDateTo" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.survey.dateTo)">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-                @if (Model.surveyDetailList != null)
-                {
-                <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.surveyDetail.surveyDetailID)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.surveyDetail.name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.surveyDetail.type)
-                            </th>                          
-                            <th>
-                                @Html.DisplayNameFor(model => model.surveyDetail.active)
-                            </th>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-8">
+                            @Html.LabelFor(model => model.survey.active, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.CheckBoxFor(model => model.survey.active, htmlAttributes: new {@checked="checked" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-6">
 
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                            @foreach (var item in Model.surveyDetailList)
+                            @if (Model.survey.surveyID == 0)
                             {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.surveyDetailID)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.name)
-                                </td>                                
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.active)
-                                </td>                                
-                                <td>
-                                    @Html.ActionLink("Opciones", "Option", new { id = item.surveyDetailID }) |
-                                    @Html.ActionLink("Modificar", "Edit", new { id = item.surveyDetailID }) |                                   
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
-                                </td>
-                            </tr>
+                                <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
                             }
+                            else
+                            {
+                                <a data-toggle="modal" href="#mySurveyDetail" class="btn bg-color-blueDark txt-color-white header-btn hidden-mobile"><i class="fa fa-circle-arrow-up fa-lg"></i> Agregar Preguntas</a>
+                            }
+                        </div>
+                    </div>
+                </div>
 
-                    </tbody>
-                </table>
-               }
+                <fieldset>
+
+                    @if (Model.surveyDetailList != null)
+                {
+                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="80%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.surveyDetail.surveyDetailID)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.surveyDetail.name)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.surveyDetail.type)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.surveyDetail.active)
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.surveyDetailList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.surveyDetailID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.active)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Opciones", "Option", new { id = item.surveyDetailID }) |
+                                            @Html.ActionLink("Modificar", "Edit", new { id = item.surveyDetailID }) |
+                                            @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
                 </fieldset>
+                @*</div>*@
+
+            </fieldset>
+
+
+
             </div>
         </div>
 

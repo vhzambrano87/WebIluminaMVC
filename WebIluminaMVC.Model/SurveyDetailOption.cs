@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace WebIluminaMVC.Model
         [Key]
         public int surveyDetailOptionID { get; set; }
         public int surveyDetailID { get; set; }
-        [Display(Name = "Descripción")]
+        [Display(Name = "Alternativas")]
         [MaxLength(length: 500)]
         public string name { get; set; }
         public bool active { get; set; }

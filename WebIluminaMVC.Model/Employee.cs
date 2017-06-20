@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,7 @@ namespace WebIluminaMVC.Model
         [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "Por favor ingresar {0}")]
         public string email { get; set; }
-
+        
         [Display(Name = "Activo")]
         public bool active { get; set; }
         [Display(Name = "F. Creación")]
