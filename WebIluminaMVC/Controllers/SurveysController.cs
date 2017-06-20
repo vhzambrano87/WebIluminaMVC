@@ -40,8 +40,11 @@ namespace WebIluminaMVC.Controllers
         // GET: Surveys/Create
         public ActionResult Create()
         {
-            SurveyView objSurveyView = new SurveyView(); 
-            
+            SurveyView objSurveyView = new SurveyView();
+
+            objSurveyView.survey = new Survey();
+            objSurveyView.surveyDetail = new SurveyDetail();
+
             return View(objSurveyView);
         }
 
@@ -60,6 +63,19 @@ namespace WebIluminaMVC.Controllers
 
                 db.Entry(surveyView.survey).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (surveyView.surveyDetail.surveyDetailID != 0)
+                {
+                    db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
+                    surveyView.surveyDetail.active = true;
+                    db.SurveyDetail.Add(surveyView.surveyDetail);
+                    db.SaveChanges();
+                }
             }
             else
             {
@@ -68,6 +84,8 @@ namespace WebIluminaMVC.Controllers
                 db.Survey.Add(surveyView.survey);
                 db.SaveChanges();
             }
+
+            surveyView.surveyDetailList = db.SurveyDetail.Where(u=>u.surveyID==surveyView.survey.surveyID).ToList();
 
             return View(surveyView);
         }

@@ -37,15 +37,18 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <section class="col col-6">
-                                <label class="input">
-                                    <i class="icon-append fa fa-calendar"></i>
-                                    <input type="text" name="CtrlDate" placeholder="" class="datepicker" data-dateformat='dd/mm/yy'>
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="input-group col-md-4">
+                                        <input type="text" name="CtrlDate" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
-                                </label>
-                            </section>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.place, htmlAttributes: new { @class = "control-label col-md-2" })
