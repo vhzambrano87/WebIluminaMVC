@@ -43,6 +43,7 @@ namespace WebIluminaMVC.Controllers
             SurveyView objSurveyView = new SurveyView();
 
             objSurveyView.survey = new Survey();
+            objSurveyView.survey.active = true;
             objSurveyView.surveyDetail = new SurveyDetail();
 
             return View(objSurveyView);
@@ -79,8 +80,8 @@ namespace WebIluminaMVC.Controllers
             }
             else
             {
-                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
-                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
+                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "MM/dd/yyyy", null);
+                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "MM/dd/yyyy", null);
                 db.Survey.Add(surveyView.survey);
                 db.SaveChanges();
             }
