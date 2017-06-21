@@ -12,6 +12,7 @@ namespace WebIluminaMVC.Model
     {
         [Key]
         public int surveyDetailID { get; set; }
+        [Display(Name = "ID Encuesta")]
         public int surveyID { get; set; }
         [Display(Name = "Preguntas")]
         [MaxLength(length: 500)]

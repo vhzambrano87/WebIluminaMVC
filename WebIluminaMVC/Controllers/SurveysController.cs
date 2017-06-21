@@ -45,6 +45,7 @@ namespace WebIluminaMVC.Controllers
             objSurveyView.survey = new Survey();
             objSurveyView.survey.active = true;
             objSurveyView.surveyDetail = new SurveyDetail();
+            objSurveyView.surveyDetailOption = new SurveyDetailOption();
 
             return View(objSurveyView);
         }
@@ -56,7 +57,7 @@ namespace WebIluminaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SurveyView surveyView)
         {       
-            if (Request.Form["SurveyID"] != "0")
+            if (Request.Form["SurveyID"] != "0" && Request.Form["SurveyID"] != null)
             {
                 surveyView.survey.surveyID = Convert.ToInt32(Request.Form["SurveyID"]);
                 surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
@@ -80,8 +81,8 @@ namespace WebIluminaMVC.Controllers
             }
             else
             {
-                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "MM/dd/yyyy", null);
-                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "MM/dd/yyyy", null);
+                surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
+                surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
                 db.Survey.Add(surveyView.survey);
                 db.SaveChanges();                
             }

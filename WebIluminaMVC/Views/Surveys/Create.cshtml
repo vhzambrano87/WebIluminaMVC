@@ -26,7 +26,7 @@
                     @Html.HiddenFor(model => model.survey.createDate)
                     @Html.HiddenFor(model => model.survey.updateUser)
                     @Html.HiddenFor(model => model.survey.updateDate)
-                    @Html.HiddenFor(model => model.survey.surveyID)
+                    <input type="hidden" name="SurveyID" value="@Model.survey.surveyID" />
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <br />
@@ -42,7 +42,7 @@
                                 <div class="form-group col-md-12">
                                     @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlDateFrom" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="mm/dd/yy">
+                                        <input type="text" name="CtrlDateFrom" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.survey.dateFrom)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                 <div class="form-group col-md-12">
                                     @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlDateTo" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="mm/dd/yy" value="@Formats. Model.survey.dateTo">
+                                        <input type="text" name="CtrlDateTo" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.survey.dateTo)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
                                     </div>
@@ -81,7 +81,7 @@
                                 }
                                 else
                                 {
-                                    <a data-toggle="modal" href="#mySurveyDetail" class="btn bg-color-blueDark txt-color-white"><i class="fa fa-circle-arrow-up fa-lg"></i> Agregar Preguntas</a>
+                                    <a data-toggle="modal" href="#mySurveyDetail" class="btn bg-color-blueDark txt-color-white"><i class="fa fa-circle-arrow-up"></i> Agregar Preguntas</a>
                                 }
                             </div>
                         </div>
@@ -132,6 +132,9 @@
                                                     @Html.DisplayFor(modelItem => item.name)
                                                 </td>
                                                 <td>
+                                                    @Html.DisplayFor(modelItem => item.type)
+                                                </td>
+                                                <td>
                                                     @Html.DisplayFor(modelItem => item.active)
                                                 </td>
                                                 <td>
@@ -140,10 +143,40 @@
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
                                                 </td>
                                             </tr>
-                                        }
+                                            @if (Model.surveyDetailOptionList.Count != 0)
+                                            {
+                                                <br />
+                                                <br />
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.surveyDetailID)</td>
+                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.name)</td>
+                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.active)</td>
+                                                            <td></td>
+                                                        </tr>
+                                                    
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item2 in Model.surveyDetailOptionList)
+                                                        {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(modelItem => item2.surveyDetailID)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item2.name)</td>
+                                                                <td>@Html.DisplayFor(modelItem => item2.active)</td>
+                                                                <td>@Html.ActionLink("Modificar", "Edit", new { id = item2.surveyDetailOptionID }) |
+                                                                @Html.ActionLink("Eliminar", "Delete", new { id = item2.surveyDetailOptionID })</td>
+                                                            </tr>
 
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                             }
+                                      }
                                     </tbody>
                                 </table>
+
                             }
                         </fieldset>
                     </div>
@@ -216,6 +249,83 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-                    }
+
+
+
+
+
+
+                <div class="modal fade" id="mySurveyDetailOption" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    &times;
+                                </button>
+                                <h4 class="modal-title">
+                                    <img src="@Settings.CurrentLogo" width="150" alt="SmartAdmin">
+                                </h4>
+                            </div>
+                            <div class="modal-body no-padding">
+
+                                <form id="login-form" class="smart-form">
+                                    <fieldset>
+                                        <section>
+                                            <br />
+                                            <input type="hidden" />
+                                            <div class="form-horizontal">
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.surveyDetail.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-6">
+                                                        @Html.EditorFor(model => model.surveyDetail.name, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.surveyDetail.name, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.surveyDetail.type, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                                    <div class="form-group">
+
+                                                        <div class="col-md-3">
+
+                                                            <select class="form-control" id="select-1">
+                                                                <option>Radio</option>
+                                                                <option>Checkbox</option>
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-2 col-md-10">
+                                                            <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </section>
+                                    </fieldset>
+                                </form>
+                            </div>
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+    }
 
                 </div>
