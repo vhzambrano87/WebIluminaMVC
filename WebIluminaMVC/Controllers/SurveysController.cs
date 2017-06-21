@@ -55,10 +55,10 @@ namespace WebIluminaMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(SurveyView surveyView)
-        {
-            if (surveyView.survey.surveyID != 0)
+        {       
+            if (Request.Form["SurveyID"] != "0")
             {
-
+                surveyView.survey.surveyID = Convert.ToInt32(Request.Form["SurveyID"]);
                 surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
                 surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
 
@@ -83,7 +83,7 @@ namespace WebIluminaMVC.Controllers
                 surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "MM/dd/yyyy", null);
                 surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "MM/dd/yyyy", null);
                 db.Survey.Add(surveyView.survey);
-                db.SaveChanges();
+                db.SaveChanges();                
             }
 
             surveyView.surveyDetailList = db.SurveyDetail.Where(u=>u.surveyID==surveyView.survey.surveyID).ToList();
