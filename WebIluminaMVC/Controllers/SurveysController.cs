@@ -46,6 +46,7 @@ namespace WebIluminaMVC.Controllers
             objSurveyView.survey.active = true;
             objSurveyView.surveyDetail = new SurveyDetail();
             objSurveyView.surveyDetailOption = new SurveyDetailOption();
+            objSurveyView.surveyDetailList = new List<SurveyDetail>();
 
             return View(objSurveyView);
         }
@@ -66,21 +67,46 @@ namespace WebIluminaMVC.Controllers
                 db.Entry(surveyView.survey).State = EntityState.Modified;
                 db.SaveChanges();
 
-                if (surveyView.surveyDetail.surveyDetailID != 0)
-                {
-                    db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
-                    db.SaveChanges();
-                    surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetailID == surveyView.surveyDetail.surveyDetailID).ToList();
-                }
-                else
+
+                if (surveyView.surveyDetail.surveyDetailID == 0)
                 {
                     surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
-                    surveyView.surveyDetail.type = Request.Form["typeDetail"];                    
+                    surveyView.surveyDetail.type = Request.Form["typeDetail"];
                     surveyView.surveyDetail.active = true;
                     db.SurveyDetail.Add(surveyView.surveyDetail);
                     db.SaveChanges();
-                    surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
+
+                    for (int i = 1; i < 7; i++)
+                    {
+                        string strOption = "option";
+                        strOption = strOption + i;
+                        surveyView.surveyDetailOption = new SurveyDetailOption();
+                        surveyView.surveyDetailOption.surveyDetailID = surveyView.surveyDetail.surveyDetailID;
+                        surveyView.surveyDetailOption.name = Request.Form[strOption];
+                        surveyView.surveyDetailOption.active = true;
+
+                        db.SurveyDetailOption.Add(surveyView.surveyDetailOption);
+                        db.SaveChanges();
+                    }                    
+
                 }
+
+
+                //    if (surveyView.surveyDetail.surveyDetailID != 0)
+                //{
+                //    db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //    surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetailID == surveyView.surveyDetail.surveyDetailID).ToList();
+                //}
+                //else
+                //{
+                //    surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
+                //    surveyView.surveyDetail.type = Request.Form["typeDetail"];                    
+                //    surveyView.surveyDetail.active = true;
+                //    db.SurveyDetail.Add(surveyView.surveyDetail);
+                //    db.SaveChanges();
+                //    surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
+                //}
             }
             else
             {
@@ -93,6 +119,7 @@ namespace WebIluminaMVC.Controllers
             }
 
             surveyView.surveyDetailList = db.SurveyDetail.Where(u=>u.surveyID==surveyView.survey.surveyID).ToList();
+            surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetail.surveyID == surveyView.survey.surveyID).ToList();
 
             return View(surveyView);
         }
