@@ -75,6 +75,7 @@ namespace WebIluminaMVC.Controllers
                 else
                 {
                     surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
+                    surveyView.surveyDetail.type = Request.Form["typeDetail"];                    
                     surveyView.surveyDetail.active = true;
                     db.SurveyDetail.Add(surveyView.surveyDetail);
                     db.SaveChanges();
