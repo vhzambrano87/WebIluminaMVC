@@ -70,6 +70,7 @@ namespace WebIluminaMVC.Controllers
                 {
                     db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
                     db.SaveChanges();
+                    surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetailID == surveyView.surveyDetail.surveyDetailID).ToList();
                 }
                 else
                 {
@@ -77,6 +78,7 @@ namespace WebIluminaMVC.Controllers
                     surveyView.surveyDetail.active = true;
                     db.SurveyDetail.Add(surveyView.surveyDetail);
                     db.SaveChanges();
+                    surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
                 }
             }
             else
@@ -84,7 +86,9 @@ namespace WebIluminaMVC.Controllers
                 surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
                 surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
                 db.Survey.Add(surveyView.survey);
-                db.SaveChanges();                
+                db.SaveChanges();
+                surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
+                     
             }
 
             surveyView.surveyDetailList = db.SurveyDetail.Where(u=>u.surveyID==surveyView.survey.surveyID).ToList();

@@ -72,8 +72,10 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4">
 
                                 @if (Model.survey.surveyID == 0)
                                 {
@@ -85,8 +87,6 @@
                                 }
                             </div>
                         </div>
-
-
                     </div>
                 </fieldset>
             </div>
@@ -138,12 +138,12 @@
                                                     @Html.DisplayFor(modelItem => item.active)
                                                 </td>
                                                 <td>
-                                                    @Html.ActionLink("Opciones", "Option", new { id = item.surveyDetailID }) |
+                                                    @Html.ActionLink("Opciones", "Option", new { id = item.surveyDetailID }, new {@onclick = "setSurveyDetailID(@item.surveyDetailID)" }) |
                                                     @Html.ActionLink("Modificar", "Edit", new { id = item.surveyDetailID }) |
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
                                                 </td>
                                             </tr>
-                                            @if (Model.surveyDetailOptionList.Count != 0)
+                                            if(Model.surveyDetailOptionList.Count != 0)
                                             {
                                                 <br />
                                                 <br />
@@ -272,7 +272,7 @@
                                     <fieldset>
                                         <section>
                                             <br />
-                                            <input type="hidden" />
+                                            <input type="hidden" name="HdfSurveyDetailID"/>
                                             <div class="form-horizontal">
                                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                 <div class="form-group">
@@ -329,3 +329,15 @@
     }
 
                 </div>
+
+
+
+<script type="text/javascript">
+
+    function setSurveyDetailID(id)
+    {
+        alert("Hola VH");
+        document.getElementByName["HdfSurveyDetailID"] = id;
+    }
+
+</script>
