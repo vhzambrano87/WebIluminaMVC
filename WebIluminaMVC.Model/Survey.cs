@@ -28,6 +28,7 @@ namespace WebIluminaMVC.Model
         [Display(Name = "F. Modificación")]
         public DateTime? updateDate { get; set; }
         public int? updateUser { get; set; }
+        public virtual ICollection<SurveyDetail> surveyDetails { get; set; }
 
     }
 }

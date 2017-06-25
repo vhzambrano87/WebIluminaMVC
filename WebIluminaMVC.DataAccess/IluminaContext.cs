@@ -17,7 +17,9 @@ namespace WebIluminaMVC.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ForeignKeyIndexConvention>();
+            modelBuilder.Conventions.Add<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
         }
 
         public virtual DbSet<User> User { get; set; }
@@ -31,7 +33,6 @@ namespace WebIluminaMVC.DataAccess
         public virtual DbSet<Option> Option { get; set; }
         public virtual DbSet<Survey> Survey { get; set; }
         public virtual DbSet<SurveyDetail> SurveyDetail { get; set; }
-        public virtual DbSet<SurveyDetailOption> SurveyDetailOption { get; set; }
 
     }
 }

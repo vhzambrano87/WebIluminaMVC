@@ -51,7 +51,6 @@
     <Compile Include="Suggestion.cs" />
     <Compile Include="Survey.cs" />
     <Compile Include="SurveyDetail.cs" />
-    <Compile Include="SurveyDetailOption.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserRole.cs" />
   </ItemGroup>

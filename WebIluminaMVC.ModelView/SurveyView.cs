@@ -12,7 +12,6 @@ namespace WebIluminaMVC.ModelView
         public Survey survey { get; set; }
         public SurveyDetail surveyDetail { get; set; }
         public IList<SurveyDetail> surveyDetailList { get; set; }
-        public SurveyDetailOption surveyDetailOption { get; set; }
-        public IList<SurveyDetailOption> surveyDetailOptionList { get; set; }
+        public string action { get; set; }
     }
 }

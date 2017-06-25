@@ -1,5 +1,6 @@
 ﻿@model WebIluminaMVC.ModelView.SurveyView
 @using WebIluminaMVC.Helpers;
+@using WebIluminaMVC.Model;
 @{
     ViewBag.Title = "Create";
 }
@@ -79,7 +80,7 @@
 
                                     @if (Model.survey.surveyID == 0)
                                     {
-                                        <input type="submit" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
+                                        <input type="submit" name="Command" value="Registrar" class="btn bg-color-blueDark txt-color-white" />
                                     }
                                     else
                                     {
@@ -90,12 +91,7 @@
                         </div>
                     </fieldset>
                 </div>
-
-
-
-
-
-
+                
 
                 @if (Model.surveyDetailList.Count > 0)
                 {
@@ -143,43 +139,18 @@
                                                     @Html.DisplayFor(modelItem => item.active)
                                                 </td>
                                                 <td>
-                                                    <a data-toggle="modal" href="#mySurveyDetailOption"><i class="fa fa-circle-arrow-up" onclick="setSurveyDetailID(@item.surveyDetailID)"></i> Opciones</a> |
-                                                    @Html.ActionLink("Modificar", "Edit", new { id = item.surveyDetailID }) |
+                                                    <a data-toggle="modal" href="#mySurveyDetail" class="" onclick="getSurveyDetail(@item.surveyDetailID)"><i></i>Modificar</a> |
+                                                    @*<button onclick="getOptionName(@item.surveyDetailID)" data-toggle="modal" data-target="#mySurveyDetail">Modificar</button>
+                                                    <input type="button" name="Command" onclick="getOptionName(@item.surveyDetailID)" data-toggle="modal" data-target="#mySurveyDetail" value="Modificar" />
+                                                    
+                                                    @Html.Label("Modificar", htmlAttributes: new { @onclick = getOptionName(item.surveyDetailID) })
+
+                                                    <a data-toggle="modal" href="#mySurveyDetail" onclick='javascript: window.location.href = "getOptionName(@item.surveyDetailID)"'> xxxxx</a>*@
+
                                                     @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
+                                                   
                                                 </td>
-                                            </tr>
-                                            if (Model.surveyDetailOptionList.Where(u=>u.surveyDetailID == item.surveyDetailID).ToList().Count != 0)
-                                            {
-                                                <br />
-                                                <br />
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.surveyDetailID)</td>
-                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.name)</td>
-                                                            <td>@Html.DisplayNameFor(model => model.surveyDetailOption.active)</td>
-                                                            <td></td>
-                                                        </tr>
-
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item2 in Model.surveyDetailOptionList)
-                                                        {
-                                                            <tr>
-                                                                <td>@Html.DisplayFor(modelItem => item2.surveyDetailID)</td>
-                                                                <td>@Html.DisplayFor(modelItem => item2.name)</td>
-                                                                <td>@Html.DisplayFor(modelItem => item2.active)</td>
-                                                                <td>
-                                                                    @Html.ActionLink("Modificar", "Edit", new { id = item2.surveyDetailOptionID }) |
-                                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item2.surveyDetailOptionID })
-                                                                </td>
-                                                            </tr>
-
-                                                        }
-
-                                                    </tbody>
-                                                </table>
-                                            }
+                                            </tr>                                            
                                         }
                                     </tbody>
                                 </table>
@@ -189,11 +160,10 @@
 
                 }
 
-
-
-
             </div>
-                            <div class="modal fade" id="mySurveyDetail" tabindex="-1" role="dialog">
+
+
+            <div class="modal fade" id="mySurveyDetail" tabindex="-1" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -210,14 +180,14 @@
                                                 <fieldset>
                                                     <section>
                                                         <br />
-                                                        @Html.HiddenFor(c => c.surveyDetail.surveyDetailID)
+                                                        @Html.HiddenFor(model => model.surveyDetail.surveyDetailID)
+                                                        <input type="hidden" name="HDSurveyDetailID" />
                                                         <div class="form-horizontal">
                                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                             <div class="form-group">
                                                                 @Html.LabelFor(model => model.surveyDetail.name, htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    @Html.EditorFor(model => model.surveyDetail.name, new { htmlAttributes = new { @class = "form-control" } })
-                                                                    @Html.ValidationMessageFor(model => model.surveyDetail.name, "", new { @class = "text-danger" })
+                                                                    <input name="surveyDetail_name" type="text" class="form-control" id="surveyDetail_name" />                                                                    
                                                                 </div>
                                                             </div>
 
@@ -228,7 +198,7 @@
 
                                                                     <div class="col-md-3">
 
-                                                                        <select class="form-control" id="select-1" name="typeDetail">
+                                                                        <select class="form-control" id="typeDetail" name="typeDetail">
                                                                             <option>Único</option>
                                                                             <option>Múltiple</option>
                                                                         </select>
@@ -240,37 +210,37 @@
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 1 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option1" type="text" class="form-control" />
+                                                                    <input name="option1" type="text" class="form-control" id="option1"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 2 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option2" type="text" class="form-control" />
+                                                                    <input name="option2" type="text" class="form-control" id="option2"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 3 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option3" type="text" class="form-control" />
+                                                                    <input name="option3" type="text" class="form-control" id="option3"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 4 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option4" type="text" class="form-control" />
+                                                                    <input name="option4" type="text" class="form-control" id="option4"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 5 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option5" type="text" class="form-control" />
+                                                                    <input name="option5" type="text" class="form-control" id="option5"/>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 @Html.Label("Opción 6 ", htmlAttributes: new { @class = "control-label col-md-2" })
                                                                 <div class="col-md-9">
-                                                                    <input name="option6" type="text" class="form-control" />
+                                                                    <input name="option6" type="text" class="form-control" id="option6"/>
                                                                 </div>
                                                             </div>
 
@@ -293,3 +263,66 @@
                             </div><!-- /.modal -->
                             }
                         </div>
+
+
+<script type="text/javascript">
+
+    function getSurveyDetail(id)
+    {
+        $.ajax({
+            type: "GET",       // make it get request instead //
+            url: '@Url.Action("getSurveyDetail", "Surveys")',
+            data: { surveyDetailID: id },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                var strOption = "";
+                var i = 1;
+                $.each(data, function (index, item) {
+                    strOption = "option" + i;                    
+                    if (i > 6) {
+                        if (i == 7)
+                        {
+                            document.getElementById('surveyDetail_name').value = item;
+                        }
+                        if (i == 8) {
+                            document.getElementById('typeDetail').value = item;
+                        }
+                    }
+                    else {
+                        document.getElementById(strOption).value = item;
+                    }
+                    i++;
+                });
+            },
+            error: function (data) {
+                debugger;
+                //var strOption = "option";
+                //var i = 1;
+                //$.each(data, function (index, item) {
+                //    strOption = strOption + i;
+                //    i++;
+                //    document.getElementById(strOption).value = item;
+                //    alert(item);
+                //});
+                alert('error');
+            }
+        });
+
+    }
+
+</script>
+
+@*@functions{
+    Formats ObjSurveyDetail = new Formats();
+    SurveyDetail FlagSurveyDetail = new SurveyDetail();
+
+    string getOptionName(int id)
+    {
+        Formats objFormat = new Formats();
+        FlagSurveyDetail= objFormat.getSurveyDetail(id);
+        return string.Empty;
+    }
+
+}*@

@@ -1152,6 +1152,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Surveys\DeleteDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebIluminaMVC.DataAccess\WebIluminaMVC.DataAccess.csproj">

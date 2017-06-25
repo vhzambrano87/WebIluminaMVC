@@ -15,14 +15,12 @@ namespace WebIluminaMVC.Controllers
     public class SurveysController : Controller
     {
         private IluminaContext db = new IluminaContext();
-
-        // GET: Surveys
+        
         public ActionResult Index()
         {
             return View(db.Survey.ToList());
         }
-
-        // GET: Surveys/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,28 +34,13 @@ namespace WebIluminaMVC.Controllers
             }
             return View(survey);
         }
+        
 
-        // GET: Surveys/Create
-        public ActionResult Create()
-        {
-            SurveyView objSurveyView = new SurveyView();
-
-            objSurveyView.survey = new Survey();
-            objSurveyView.survey.active = true;
-            objSurveyView.surveyDetail = new SurveyDetail();
-            objSurveyView.surveyDetailOption = new SurveyDetailOption();
-            objSurveyView.surveyDetailList = new List<SurveyDetail>();
-
-            return View(objSurveyView);
-        }
-
-        // POST: Surveys/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SurveyView surveyView)
-        {       
+        public ActionResult Create(SurveyView surveyView, string Command)
+        {           
+
             if (Request.Form["SurveyID"] != "0" && Request.Form["SurveyID"] != null)
             {
                 surveyView.survey.surveyID = Convert.ToInt32(Request.Form["SurveyID"]);
@@ -71,109 +54,63 @@ namespace WebIluminaMVC.Controllers
                 if (surveyView.surveyDetail.surveyDetailID == 0)
                 {
                     surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
+                    surveyView.surveyDetail.name = Request.Form["surveyDetail_name"];
                     surveyView.surveyDetail.type = Request.Form["typeDetail"];
+                    surveyView.surveyDetail.option1 = Request.Form["option1"];
+                    surveyView.surveyDetail.option2 = Request.Form["option2"];
+                    surveyView.surveyDetail.option3 = Request.Form["option3"];
+                    surveyView.surveyDetail.option4 = Request.Form["option4"];
+                    surveyView.surveyDetail.option5 = Request.Form["option5"];
+                    surveyView.surveyDetail.option6 = Request.Form["option6"];
                     surveyView.surveyDetail.active = true;
+
                     db.SurveyDetail.Add(surveyView.surveyDetail);
                     db.SaveChanges();
-
-                    for (int i = 1; i < 7; i++)
-                    {
-                        string strOption = "option";
-                        strOption = strOption + i;
-                        surveyView.surveyDetailOption = new SurveyDetailOption();
-                        surveyView.surveyDetailOption.surveyDetailID = surveyView.surveyDetail.surveyDetailID;
-                        surveyView.surveyDetailOption.name = Request.Form[strOption];
-                        surveyView.surveyDetailOption.active = true;
-
-                        db.SurveyDetailOption.Add(surveyView.surveyDetailOption);
-                        db.SaveChanges();
-                    }                    
-
                 }
-
-
-                //    if (surveyView.surveyDetail.surveyDetailID != 0)
-                //{
-                //    db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
-                //    db.SaveChanges();
-                //    surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetailID == surveyView.surveyDetail.surveyDetailID).ToList();
-                //}
-                //else
-                //{
-                //    surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
-                //    surveyView.surveyDetail.type = Request.Form["typeDetail"];                    
-                //    surveyView.surveyDetail.active = true;
-                //    db.SurveyDetail.Add(surveyView.surveyDetail);
-                //    db.SaveChanges();
-                //    surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
-                //}
+                else
+                {
+                    db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
             else
             {
                 surveyView.survey.dateFrom = DateTime.ParseExact(Request.Form["CtrlDateFrom"], "dd/MM/yyyy", null);
                 surveyView.survey.dateTo = DateTime.ParseExact(Request.Form["CtrlDateTo"], "dd/MM/yyyy", null);
                 db.Survey.Add(surveyView.survey);
-                db.SaveChanges();
-                surveyView.surveyDetailOptionList = new List<SurveyDetailOption>();
-                     
+                db.SaveChanges();                     
             }
-
-            surveyView.surveyDetailList = db.SurveyDetail.Where(u=>u.surveyID==surveyView.survey.surveyID).ToList();
-            surveyView.surveyDetailOptionList = db.SurveyDetailOption.Where(u=>u.surveyDetail.surveyID == surveyView.survey.surveyID).ToList();
-
+            surveyView.surveyDetailList = db.SurveyDetail.Where(x => x.surveyID == surveyView.survey.surveyID).ToList();
             return View(surveyView);
         }
-
-        // GET: Surveys/Edit/5
-        public ActionResult Edit(int? id)
+        
+        public ActionResult Create(int? id)
         {
-            if (id == null)
+            SurveyView objSurveyView = new SurveyView();
+            if (id != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                objSurveyView.surveyDetail = db.SurveyDetail.FirstOrDefault(x => x.surveyDetailID == id);
+                objSurveyView.survey = db.Survey.FirstOrDefault(x => x.surveyID == objSurveyView.surveyDetail.surveyID);
+                objSurveyView.surveyDetailList = db.SurveyDetail.Where(u => u.surveyID == objSurveyView.surveyDetail.surveyID).ToList();
             }
-            Survey survey = db.Survey.Find(id);
-            if (survey == null)
+            else
             {
-                return HttpNotFound();
+                objSurveyView.survey = new Survey();
+                objSurveyView.survey.active = true;
+                objSurveyView.surveyDetail = new SurveyDetail();
+                objSurveyView.surveyDetailList = new List<SurveyDetail>();
             }
-            return View(survey);
+            return View(objSurveyView);
         }
-
-        // POST: Surveys/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "surveyID,name,dateFrom,dateTo,active,createDate,createUser,updateDate,updateUser")] Survey survey)
+       
+        public ActionResult DeleteDetail(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(survey).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(survey);
+            SurveyDetail surveyDetail = db.SurveyDetail.Find(id);
+            db.SurveyDetail.Remove(surveyDetail);
+            db.SaveChanges();
+            return RedirectToAction("Create",id);
         }
-
-        // GET: Surveys/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Survey survey = db.Survey.Find(id);
-            if (survey == null)
-            {
-                return HttpNotFound();
-            }
-            return View(survey);
-        }
-
-        // POST: Surveys/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Survey survey = db.Survey.Find(id);
             db.Survey.Remove(survey);
@@ -181,13 +118,36 @@ namespace WebIluminaMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        [HttpGet]
+        public JsonResult getSurveyDetail(int surveyDetailID)
         {
-            if (disposing)
+            IList<String> OptionList = new List<String>();
+            SurveyDetail objSurveyDetail = new SurveyDetail();
+            objSurveyDetail = db.SurveyDetail.FirstOrDefault(x=>x.surveyDetailID==surveyDetailID);
+            if (objSurveyDetail != null)
             {
-                db.Dispose();
+                OptionList.Add(objSurveyDetail.option1);
+                OptionList.Add(objSurveyDetail.option2);
+                OptionList.Add(objSurveyDetail.option3);
+                OptionList.Add(objSurveyDetail.option4);
+                OptionList.Add(objSurveyDetail.option5);
+                OptionList.Add(objSurveyDetail.option6);
+                OptionList.Add(objSurveyDetail.name);
+                OptionList.Add(objSurveyDetail.type);
             }
-            base.Dispose(disposing);
+            else
+            {
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+                OptionList.Add("");
+            }
+            return Json(OptionList, JsonRequestBehavior.AllowGet);
         }
+
     }
 }
