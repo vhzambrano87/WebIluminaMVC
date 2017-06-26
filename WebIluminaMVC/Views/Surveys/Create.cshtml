@@ -84,7 +84,7 @@
                                     }
                                     else
                                     {
-                                        <a data-toggle="modal" href="#mySurveyDetail" class="btn bg-color-blueDark txt-color-white"><i class="fa fa-circle-arrow-up"></i> Agregar Preguntas</a>
+                                        <a data-toggle="modal" href="#mySurveyDetail" class="btn btn-danger txt-color-white"><i class="fa fa-circle-arrow-up"></i> Agregar Preguntas</a>
                                     }
                                 </div>
                             </div>
@@ -140,14 +140,8 @@
                                                 </td>
                                                 <td>
                                                     <a data-toggle="modal" href="#mySurveyDetail" class="" onclick="getSurveyDetail(@item.surveyDetailID)"><i></i>Modificar</a> |
-                                                    @*<button onclick="getOptionName(@item.surveyDetailID)" data-toggle="modal" data-target="#mySurveyDetail">Modificar</button>
-                                                    <input type="button" name="Command" onclick="getOptionName(@item.surveyDetailID)" data-toggle="modal" data-target="#mySurveyDetail" value="Modificar" />
-                                                    
-                                                    @Html.Label("Modificar", htmlAttributes: new { @onclick = getOptionName(item.surveyDetailID) })
-
-                                                    <a data-toggle="modal" href="#mySurveyDetail" onclick='javascript: window.location.href = "getOptionName(@item.surveyDetailID)"'> xxxxx</a>*@
-
-                                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.surveyDetailID })
+                                                  
+                                                    @Html.ActionLink("Eliminar", "DeleteDetail", new { id = item.surveyDetailID })
                                                    
                                                 </td>
                                             </tr>                                            
@@ -180,7 +174,7 @@
                                                 <fieldset>
                                                     <section>
                                                         <br />
-                                                        @Html.HiddenFor(model => model.surveyDetail.surveyDetailID)
+                                                        
                                                         <input type="hidden" name="HDSurveyDetailID" />
                                                         <div class="form-horizontal">
                                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -280,7 +274,8 @@
                 var strOption = "";
                 var i = 1;
                 $.each(data, function (index, item) {
-                    strOption = "option" + i;                    
+
+                   strOption = "option" + i;                    
                     if (i > 6) {
                         if (i == 7)
                         {
@@ -288,6 +283,10 @@
                         }
                         if (i == 8) {
                             document.getElementById('typeDetail').value = item;
+                        }
+                        if (i == 9)
+                        {
+                            document.getElementById('HDSurveyDetailID').value = item;                            
                         }
                     }
                     else {
@@ -298,31 +297,10 @@
             },
             error: function (data) {
                 debugger;
-                //var strOption = "option";
-                //var i = 1;
-                //$.each(data, function (index, item) {
-                //    strOption = strOption + i;
-                //    i++;
-                //    document.getElementById(strOption).value = item;
-                //    alert(item);
-                //});
-                alert('error');
+                alert(data);
             }
         });
 
     }
 
 </script>
-
-@*@functions{
-    Formats ObjSurveyDetail = new Formats();
-    SurveyDetail FlagSurveyDetail = new SurveyDetail();
-
-    string getOptionName(int id)
-    {
-        Formats objFormat = new Formats();
-        FlagSurveyDetail= objFormat.getSurveyDetail(id);
-        return string.Empty;
-    }
-
-}*@

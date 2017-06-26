@@ -38,7 +38,7 @@ namespace WebIluminaMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SurveyView surveyView, string Command)
+        public ActionResult Create(SurveyView surveyView)
         {           
 
             if (Request.Form["SurveyID"] != "0" && Request.Form["SurveyID"] != null)
@@ -50,8 +50,8 @@ namespace WebIluminaMVC.Controllers
                 db.Entry(surveyView.survey).State = EntityState.Modified;
                 db.SaveChanges();
 
-
-                if (surveyView.surveyDetail.surveyDetailID == 0)
+                
+                if (Request.Form["HDSurveyDetailID"] == "0")
                 {
                     surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
                     surveyView.surveyDetail.name = Request.Form["surveyDetail_name"];
@@ -69,6 +69,7 @@ namespace WebIluminaMVC.Controllers
                 }
                 else
                 {
+                    surveyView.surveyDetail.surveyDetailID = Convert.ToInt32(Request.Form["HDSurveyDetailID"]);
                     db.Entry(surveyView.surveyDetail).State = EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -124,6 +125,7 @@ namespace WebIluminaMVC.Controllers
             IList<String> OptionList = new List<String>();
             SurveyDetail objSurveyDetail = new SurveyDetail();
             objSurveyDetail = db.SurveyDetail.FirstOrDefault(x=>x.surveyDetailID==surveyDetailID);
+
             if (objSurveyDetail != null)
             {
                 OptionList.Add(objSurveyDetail.option1);
@@ -134,9 +136,11 @@ namespace WebIluminaMVC.Controllers
                 OptionList.Add(objSurveyDetail.option6);
                 OptionList.Add(objSurveyDetail.name);
                 OptionList.Add(objSurveyDetail.type);
+                OptionList.Add(objSurveyDetail.surveyDetailID.ToString());
             }
             else
             {
+                OptionList.Add("");
                 OptionList.Add("");
                 OptionList.Add("");
                 OptionList.Add("");
