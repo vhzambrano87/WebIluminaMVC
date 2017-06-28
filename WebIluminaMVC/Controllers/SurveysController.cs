@@ -50,20 +50,19 @@ namespace WebIluminaMVC.Controllers
                 db.Entry(surveyView.survey).State = EntityState.Modified;
                 db.SaveChanges();
 
-                
-                if (Request.Form["HDSurveyDetailID"] == "0")
-                {
-                    surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
-                    surveyView.surveyDetail.name = Request.Form["surveyDetail_name"];
-                    surveyView.surveyDetail.type = Request.Form["typeDetail"];
-                    surveyView.surveyDetail.option1 = Request.Form["option1"];
-                    surveyView.surveyDetail.option2 = Request.Form["option2"];
-                    surveyView.surveyDetail.option3 = Request.Form["option3"];
-                    surveyView.surveyDetail.option4 = Request.Form["option4"];
-                    surveyView.surveyDetail.option5 = Request.Form["option5"];
-                    surveyView.surveyDetail.option6 = Request.Form["option6"];
-                    surveyView.surveyDetail.active = true;
+                surveyView.surveyDetail.surveyID = surveyView.survey.surveyID;
+                surveyView.surveyDetail.name = Request.Form["surveyDetail_name"];
+                surveyView.surveyDetail.type = Request.Form["typeDetail"];
+                surveyView.surveyDetail.option1 = Request.Form["option1"];
+                surveyView.surveyDetail.option2 = Request.Form["option2"];
+                surveyView.surveyDetail.option3 = Request.Form["option3"];
+                surveyView.surveyDetail.option4 = Request.Form["option4"];
+                surveyView.surveyDetail.option5 = Request.Form["option5"];
+                surveyView.surveyDetail.option6 = Request.Form["option6"];
+                surveyView.surveyDetail.active = true;
 
+                if (Request.Form["HDSurveyDetailID"] == "0" || Request.Form["HDSurveyDetailID"] == "" || Request.Form["HDSurveyDetailID"] == null)
+                {                    
                     db.SurveyDetail.Add(surveyView.surveyDetail);
                     db.SaveChanges();
                 }

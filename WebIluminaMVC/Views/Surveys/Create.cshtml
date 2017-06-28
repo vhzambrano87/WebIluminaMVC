@@ -174,8 +174,17 @@
                                                 <fieldset>
                                                     <section>
                                                         <br />
-                                                        
-                                                        <input type="hidden" name="HDSurveyDetailID" />
+                                                        @Html.HiddenFor(model => model.surveyDetail.surveyDetailID)
+                                                        @Html.HiddenFor(model => model.surveyDetail.surveyID)
+                                                        @Html.HiddenFor(model => model.surveyDetail.type)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option1)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option2)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option3)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option4)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option5)
+                                                        @Html.HiddenFor(model => model.surveyDetail.option6)
+
+                                                        <input type="hidden" name="HDSurveyDetailID" id="HDSurveyDetailID"/>
                                                         <div class="form-horizontal">
                                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                             <div class="form-group">
@@ -286,7 +295,8 @@
                         }
                         if (i == 9)
                         {
-                            document.getElementById('HDSurveyDetailID').value = item;                            
+                            document.getElementById('HDSurveyDetailID').value = item;
+                            alert(item);
                         }
                     }
                     else {
