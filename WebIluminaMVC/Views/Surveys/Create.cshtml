@@ -84,7 +84,7 @@
                                     }
                                     else
                                     {
-                                        <a data-toggle="modal" href="#mySurveyDetail" class="btn btn-danger txt-color-white"><i class="fa fa-circle-arrow-up"></i> Agregar Preguntas</a>
+                                        <a data-toggle="modal" href="#mySurveyDetail" class="btn btn-danger txt-color-white" onclick="ModalClear()"><i class="fa fa-circle-arrow-up"></i> Agregar Preguntas</a>
                                     }
                                 </div>
                             </div>
@@ -296,7 +296,6 @@
                         if (i == 9)
                         {
                             document.getElementById('HDSurveyDetailID').value = item;
-                            alert(item);
                         }
                     }
                     else {
@@ -311,6 +310,18 @@
             }
         });
 
+    }
+
+    function ModalClear()
+    {
+        var strOption = "";
+        for (i = 1; i < 7; i++)
+        {
+            strOption = "option" + i;
+            document.getElementById(strOption).value =null;
+        }
+        document.getElementById('surveyDetail_name').value = null;
+        document.getElementById('typeDetail').value = "Único";
     }
 
 </script>

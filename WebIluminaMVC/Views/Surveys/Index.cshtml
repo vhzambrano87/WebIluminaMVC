@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@using WebIluminaMVC.Helpers
 <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
 
     <header>
@@ -56,10 +56,10 @@
                                         @Html.DisplayFor(modelItem => item.name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.dateFrom)
+                                        @Formats.DateFormat(item.dateFrom)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.dateTo)
+                                        @Formats.DateFormat(item.dateTo)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.active)

@@ -87,11 +87,15 @@ namespace WebIluminaMVC.Controllers
         public ActionResult Create(int? id)
         {
             SurveyView objSurveyView = new SurveyView();
+
+            objSurveyView.survey = new Survey();
+            objSurveyView.surveyDetail = new SurveyDetail();
+
             if (id != null)
             {
                 objSurveyView.surveyDetail = db.SurveyDetail.FirstOrDefault(x => x.surveyDetailID == id);
-                objSurveyView.survey = db.Survey.FirstOrDefault(x => x.surveyID == objSurveyView.surveyDetail.surveyID);
-                objSurveyView.surveyDetailList = db.SurveyDetail.Where(u => u.surveyID == objSurveyView.surveyDetail.surveyID).ToList();
+                objSurveyView.survey = db.Survey.FirstOrDefault(x => x.surveyID == id);
+                objSurveyView.surveyDetailList = db.SurveyDetail.Where(u => u.surveyID == id).ToList();
             }
             else
             {
