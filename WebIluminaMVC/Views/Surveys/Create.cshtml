@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-12">
-                                        @Html.LabelFor(model => model.survey.dateTo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.survey.dateFrom, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="input-group col-md-4">
                                             <input type="text" name="CtrlDateFrom" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.survey.dateFrom)">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

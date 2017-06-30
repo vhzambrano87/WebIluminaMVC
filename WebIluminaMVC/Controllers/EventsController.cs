@@ -48,10 +48,8 @@ namespace WebIluminaMVC.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
-            if(DataUtil.Validation())
-                return View();
-            else
-                return RedirectToAction("Login", "Home");
+            Model.Event objEvent = new Model.Event();
+            return View(objEvent);
         }
 
         // POST: Events/Create
@@ -65,8 +63,7 @@ namespace WebIluminaMVC.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    @event.date = DateTime.ParseExact(Request.Form["CtrlDate"], "dd/MM/yyyy", null);
-
+                    @event.date = DateTime.ParseExact(Request.Form["CtrlDate"] + @event.date + Request.Form["CtrlTime"], "dd/MM/yyyy HH:mm", null);
 
                     if (Request.Files.Count > 0)
                     {

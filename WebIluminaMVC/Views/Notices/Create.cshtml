@@ -1,5 +1,5 @@
 ﻿@model WebIluminaMVC.Model.Notice
-
+@using WebIluminaMVC.Helpers;
 @{
     ViewBag.Title = "Create";
 }
@@ -43,7 +43,7 @@
                                 <div class="form-group col-md-12">
                                     @Html.LabelFor(model => model.publishDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlPublishDate" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy">
+                                        <input type="text" name="CtrlPublishDate"  class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.publishDate)">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
                                     </div>

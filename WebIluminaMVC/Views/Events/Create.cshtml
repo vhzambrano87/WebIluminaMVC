@@ -1,5 +1,5 @@
 ﻿@model WebIluminaMVC.Model.Event
-
+@using WebIluminaMVC.Helpers;
 @{
     ViewBag.Title = "Create";
 }
@@ -41,13 +41,26 @@
                                 <div class="form-group col-md-12">
                                     @Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="input-group col-md-4">
-                                        <input type="text" name="CtrlDate" placeholder="Seleccionar Fecha" class="form-control datepicker" data-dateformat="dd/mm/yy">
-                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" name="CtrlDate" class="form-control datepicker" data-dateformat="dd/mm/yy" value="@Formats.DateFormatShort(Model.date)">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>                                        
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label class="control-label col-md-2">Hora</label>                                    
+                                    <div class="input-group col-md-4">
+                                        <input id="timepicker" type="text" name="CtrlTime" class="form-control">
+                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.place, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -91,3 +104,21 @@
         </div>
     </div>
 </div>
+
+
+@section pagespecific {
+    <!-- PAGE RELATED PLUGIN(S) -->
+    <script src="/scripts/plugin/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="/scripts/plugin/clockpicker/clockpicker.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('#timepicker').timepicker();
+
+        $('#clockpicker').clockpicker({
+            placement: 'top',
+            donetext: 'Done'
+        });
+
+    </script>
+}

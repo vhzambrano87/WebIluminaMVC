@@ -48,10 +48,8 @@ namespace WebIluminaMVC.Controllers
         // GET: Notices/Create
         public ActionResult Create()
         {
-            if(DataUtil.Validation())
-                return View();
-            else
-                return RedirectToAction("Login", "Home");
+            Notice objNotice = new Notice();
+            return View(objNotice);
         }
 
         // POST: Notices/Create
